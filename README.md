@@ -6,7 +6,6 @@
 A lightweight, opinionated, and automatic tiling window manager for GNOME Shell 3.38.
 
 <img width="2560" height="1440" alt="Simple-Tiling" src="https://github.com/user-attachments/assets/18fcbb34-3e0e-45b8-abe1-0e752b8d970c" />
-*A screenshot of the extension in action with a master window and a Fibonacci-tiled stack.*
 
 ## Introduction
 
