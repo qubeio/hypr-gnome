@@ -74,4 +74,4 @@ To prevent an application from being tiled, you can add its `WM_CLASS` to the `e
 
 To find an application's `WM_CLASS`, open a terminal and run the command `xprop WM_CLASS`. Your cursor will turn into a crosshair. Click on the window of the application you want to exclude.
 
-*Example `exceptions.txt`:*
+*Example `[exceptions.txt](https://github.com/Domoel/Simple-Tiling/blob/main/exceptions.txt)`:*
