@@ -5,7 +5,7 @@
 
 A lightweight, opinionated, and automatic tiling window manager for GNOME Shell 3.38.
 
-<img width="2560" height="1440" alt="Simple-Tiling" src="https://github.com/user-attachments/assets/bb776134-57e0-4fcc-93c8-0b43b616dd11" />
+<img width="2560" height="1440" alt="Simple-Tiling-v2" src="https://github.com/user-attachments/assets/5a55e9a9-98ec-4e98-9f9a-2d8d01f54c84" />
 
 ## Introduction
 
