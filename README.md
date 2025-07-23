@@ -17,6 +17,7 @@ This extension was built from the ground up to be stable and performant on **GNO
 
 * **Automatic Tiling:** Windows are automatically arranged into a master and stack layout without any manual intervention.
 * **Master & Fibonacci Stack Layout:** The first window becomes the "master," occupying the left half of the screen. All subsequent windows form a "stack" on the right half, which is tiled using a space-efficient Fibonacci-style algorithm.
+* **Configurable New Window Behavior:** Choose whether new windows open as the new master or are appended to the end of the stack.
 * **Tiling Lock:** The layout is strict by default. If you manually move a window with the mouse and drop it in an empty space, it will automatically "snap back" to its designated tile position, preserving the integrity of the layout.
 * **Interactive Window Swapping:**
     * **Drag & Drop:** Swap any two windows by simply dragging one and dropping it over the other.
@@ -83,6 +84,10 @@ You can adjust the window gap margins (inner gaps between windows, outer gaps ho
 #### Adjusting Tiling Window Delays
 
 If you have race condition issues between mutter (Gnome WM) and the Simple Tiling extension, you can adjust the window delay settings (both for tiling windows as well as for centered application from the exceptions list) directly in the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extension.js). You will find the parameter at line 222 (commented). Defaults to "20" for General Tiling Window Delay and "5" for centered Apps on the Exception List.
+
+#### Configurable New Window Behavior
+
+A toogle setting allows you to control the behavior for newly opened windows. You can choose to either have them become the new master window (pushing the old master into the stack) or have them appended to the stack as the last window (Default).
 
 ## Future Development
 
