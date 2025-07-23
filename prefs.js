@@ -48,10 +48,10 @@ function buildPrefsWidget() {
     store.set_column_types([ GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_INT, GObject.TYPE_INT ]);
 
     addKeybinding(store, settings, 'swap-master-window', 'Master-Fenster tauschen');
-    addKeybinding(store, settings, 'swap-left-window', 'Nach links tauschen');
-    addKeybinding(store, settings, 'swap-right-window', 'Nach rechts tauschen');
-    addKeybinding(store, settings, 'swap-up-window', 'Nach oben tauschen');
-    addKeybinding(store, settings, 'swap-down-window', 'Nach unten tauschen');
+    addKeybinding(store, settings, 'swap-left-window', 'Fenster nach links tauschen');
+    addKeybinding(store, settings, 'swap-right-window', 'Fenster nach rechts tauschen');
+    addKeybinding(store, settings, 'swap-up-window', 'Fenster nach oben tauschen');
+    addKeybinding(store, settings, 'swap-down-window', 'Fenster nach unten tauschen');
     
     let treeView = new Gtk.TreeView({ model: store, headers_visible: false, hexpand: true, visible: true });
     keysBox.add(treeView);
@@ -92,7 +92,7 @@ function buildPrefsWidget() {
     // ---------------------------------------------------- //
     // Section for Window Gaps                              //
     // ---------------------------------------------------- //
-    const gapsTitle = new Gtk.Label({ label: '<b>Abstände (Gaps)</b>', use_markup: true, halign: Gtk.Align.START, visible: true });
+    const gapsTitle = new Gtk.Label({ label: '<b>Fensterabstände (Gaps)</b>', use_markup: true, halign: Gtk.Align.START, visible: true });
     const gapsFrame = new Gtk.Frame({ label_widget: gapsTitle, shadow_type: Gtk.ShadowType.NONE, visible: true });
     const gapsGrid = new Gtk.Grid({ margin: 12, column_spacing: 12, row_spacing: 12, visible: true });
     gapsFrame.add(gapsGrid);
@@ -106,7 +106,7 @@ function buildPrefsWidget() {
     // ---------------------------------------------------- //
     // Section for Window Behavior (Master vs. Stack)       //
     // ---------------------------------------------------- //
-    const behaviorTitle = new Gtk.Label({ label: '<b>Verhalten</b>', use_markup: true, halign: Gtk.Align.START, visible: true });
+    const behaviorTitle = new Gtk.Label({ label: '<b>Fensterverhalten</b>', use_markup: true, halign: Gtk.Align.START, visible: true });
     const behaviorFrame = new Gtk.Frame({ label_widget: behaviorTitle, shadow_type: Gtk.ShadowType.NONE, visible: true });
     const behaviorGrid = new Gtk.Grid({ margin: 12, column_spacing: 12, row_spacing: 12, visible: true });
     behaviorFrame.add(behaviorGrid);
