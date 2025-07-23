@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.gnome.shell.extensions.simple-tiling.domoel"
-          path="/org/gnome/shell/extensions/simple-tiling-domoel/">
-
-    <!-- Master ↔ Stack -->
+  <schema id="org.gnome.shell.extensions.simple-tiling.domoel" path="/org/gnome/shell/extensions/simple-tiling-domoel/">
+    
     <key name="swap-master-window" type="as">
-      <default>['&lt;Super&gt;Return']</default>
-      <summary>Tauscht Master-Fenster mit dem fokussierten Fenster</summary>
+      <default><![CDATA[['<Super>Return']]]></default>
+      <summary>Tauscht das fokussierte Fenster mit dem Master.</summary>
     </key>
-
-    <!-- Richtungs-Swaps -->
     <key name="swap-left-window" type="as">
-      <default>['&lt;Super&gt;Left']</default>
-      <summary>Tauscht mit linkem Nachbarfenster</summary>
+      <default><![CDATA[['<Super>Left']]]></default>
+      <summary>Tauscht das Fenster mit dem linken Nachbarn.</summary>
     </key>
-
     <key name="swap-right-window" type="as">
-      <default>['&lt;Super&gt;Right']</default>
-      <summary>Tauscht mit rechtem Nachbarfenster</summary>
+      <default><![CDATA[['<Super>Right']]]></default>
+      <summary>Tauscht das Fenster mit dem rechten Nachbarn.</summary>
     </key>
-
     <key name="swap-up-window" type="as">
-      <default>['&lt;Super&gt;Up']</default>
-      <summary>Tauscht mit oberem Nachbarfenster</summary>
+      <default><![CDATA[['<Super>Up']]]></default>
+      <summary>Tauscht das Fenster mit dem oberen Nachbarn.</summary>
     </key>
-
     <key name="swap-down-window" type="as">
-      <default>['&lt;Super&gt;Down']</default>
-      <summary>Tauscht mit unterem Nachbarfenster</summary>
+      <default><![CDATA[['<Super>Down']]]></default>
+      <summary>Tauscht das Fenster mit dem unteren Nachbarn.</summary>
     </key>
 
+    <key name="inner-gap" type="i">
+      <default>10</default>
+      <summary>Der Abstand zwischen den Fenstern in Pixeln.</summary>
+    </key>
+    <key name="outer-gap-vertical" type="i">
+      <default>5</default>
+      <summary>Der Abstand zum oberen und unteren Bildschirmrand.</summary>
+    </key>
+    <key name="outer-gap-horizontal" type="i">
+      <default>10</default>
+      <summary>Der Abstand zum linken und rechten Bildschirmrand.</summary>
+    </key>
+    
   </schema>
 </schemalist>
