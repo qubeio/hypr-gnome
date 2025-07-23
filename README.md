@@ -1,4 +1,5 @@
-# Simple Tiling
+
+<center># Simple Tiling</center>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GNOME Shell Version](https://img.shields.io/badge/GNOME%20Shell-3.38-blue)
