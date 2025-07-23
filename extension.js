@@ -1,9 +1,11 @@
-// Simple-Tiling – GNOME Shell 3.38 (X11) - Version 1.0
-// Features: Fibonacci-Stack-Layout (50/50) · Tiling-Lock · Drag- & Keyboard-Swap
-// Pop-ups: zentriert + Always-on-Top + Exception-List
-// © 2025 domoel – MIT
+// ---------------------------------------------------- //
+// Simple-Tiling – GNOME Shell 3.38 (X11) - Version 2   //
+// © 2025 domoel – MIT                                  //
+// ---------------------------------------------------- //
 
-// Global Imports
+// ---------------------------------------------------- //
+// Global Imports                                       //
+// ---------------------------------------------------- //
 const Main = imports.ui.main;
 const Meta = imports.gi.Meta;
 const Shell = imports.gi.Shell;
@@ -17,8 +19,9 @@ const Me = ExtensionUtils.getCurrentExtension();
 const SCHEMA_NAME = 'org.gnome.shell.extensions.simple-tiling.domoel';
 const WM_SCHEMA = 'org.gnome.desktop.wm.keybindings';
 
-// InteractionHandler
-// Verwaltung aller Nutzerinteraktionen (Maus & Tastatur)
+// ---------------------------------------------------- //
+// InteractionHandler                                   //
+// ---------------------------------------------------- //
 class InteractionHandler {
     constructor(tiler) {
         this.tiler = tiler;
@@ -28,7 +31,6 @@ class InteractionHandler {
         this._savedWmShortcuts = {};
         this._grabOpIds = [];
         this._settingsChangedId = null;
-
         this._onSettingsChanged = this._onSettingsChanged.bind(this);
         this._prepareWmShortcuts();
     }
@@ -200,25 +202,26 @@ class InteractionHandler {
     }
 }
 
-
-// Tiler
-// Die Hauptklasse für die Tiling-Logik.
+// ---------------------------------------------------- //
+// Tiler                                                //
+// Main Classes for Tiling Logic                        //
+// ---------------------------------------------------- //
 class Tiler {
     constructor() {
         this.windows = [];
         this.grabbedWindow = null;
+        this._settings = ExtensionUtils.getSettings(SCHEMA_NAME);
         this.wmSettings = new Gio.Settings({ schema: WM_SCHEMA });
         this._signalIds = new Map();
         this._tileInProgress = false;
-        
-        // Layout-Konfiguration
-        this._innerGap = 10;
-        this._outerGapVertical = 5;
-        this._outerGapHorizontal = 10;
+     
+        this._innerGap = this._settings.get_int('inner-gap');
+        this._outerGapVertical = this._settings.get_int('outer-gap-vertical');
+        this._outerGapHorizontal = this._settings.get_int('outer-gap-horizontal');
 
-        // Delay-Zeiten für das Tiling und Exception Windows
-        this._tilingDelay = 20;
-        this._centeringDelay = 5;
+        // Window Delay Settings
+        this._tilingDelay = 20; // General Tiling Window Delay
+        this._centeringDelay = 5; //Delay for centered Apps on the Exception List
 
         this._exceptions = [];
         this._interactionHandler = new InteractionHandler(this);
@@ -227,6 +230,7 @@ class Tiler {
         this._onWindowRemoved = this._onWindowRemoved.bind(this);
         this._onActiveWorkspaceChanged = this._onActiveWorkspaceChanged.bind(this);
         this._onWindowMinimizedStateChanged = this._onWindowMinimizedStateChanged.bind(this);
+        this._onSettingsChanged = this._onSettingsChanged.bind(this);
     }
     
     enable() {
@@ -235,6 +239,7 @@ class Tiler {
         this._signalIds.set('workspace-changed', { object: workspaceManager, id: workspaceManager.connect('active-workspace-changed', this._onActiveWorkspaceChanged) });
         this._connectToWorkspace();
         this._interactionHandler.enable();
+        this._signalIds.set('settings-changed', { object: this._settings, id: this._settings.connect('changed', this._onSettingsChanged) });
     }
 
     disable() {
@@ -245,6 +250,13 @@ class Tiler {
         }
         this._signalIds.clear();
         this.windows = [];
+    }
+    
+    _onSettingsChanged() {
+        this._innerGap = this._settings.get_int('inner-gap');
+        this._outerGapVertical = this._settings.get_int('outer-gap-vertical');
+        this._outerGapHorizontal = this._settings.get_int('outer-gap-horizontal');
+        this.queueTile();
     }
     
     _loadExceptions() {
@@ -424,7 +436,9 @@ class Tiler {
     }
 }
 
-// Extension Wrapper
+// ---------------------------------------------------- //
+// Extension Wrapper                                    //
+// ---------------------------------------------------- //
 class SimpleTilingExtension {
     constructor() {
         this.tiler = null;
