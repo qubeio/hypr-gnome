@@ -74,3 +74,15 @@ To prevent an application from being tiled, you can add its `WM_CLASS` to the `e
 To find an application's `WM_CLASS`, open a terminal and run the command `xprop WM_CLASS`. Your cursor will turn into a crosshair. Click on the window of the application you want to exclude. 
 
 An Example of an exceptions.txt can be found in the repo.
+
+## Future Development
+
+This extension was built to solve a specific need. However, future enhancements could include:
+* Multi-monitor support.
+* Additional layout algorithms.
+* A more detailed settings panel to configure gaps and other options via a GUI.
+
+## License
+
+This project is licensed under the MIT License - see the `LICENSE` file for details.
+
