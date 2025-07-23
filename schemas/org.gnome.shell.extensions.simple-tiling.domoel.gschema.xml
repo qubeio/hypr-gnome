@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.simple-tiling.domoel"
+          path="/org/gnome/shell/extensions/simple-tiling-domoel/">
+
+    <!-- Master ↔ Stack -->
+    <key name="swap-master-window" type="as">
+      <default>['&lt;Super&gt;Return']</default>
+      <summary>Tauscht Master-Fenster mit dem fokussierten Fenster</summary>
+    </key>
+
+    <!-- Richtungs-Swaps -->
+    <key name="swap-left-window" type="as">
+      <default>['&lt;Super&gt;Left']</default>
+      <summary>Tauscht mit linkem Nachbarfenster</summary>
+    </key>
+
+    <key name="swap-right-window" type="as">
+      <default>['&lt;Super&gt;Right']</default>
+      <summary>Tauscht mit rechtem Nachbarfenster</summary>
+    </key>
+
+    <key name="swap-up-window" type="as">
+      <default>['&lt;Super&gt;Up']</default>
+      <summary>Tauscht mit oberem Nachbarfenster</summary>
+    </key>
+
+    <key name="swap-down-window" type="as">
+      <default>['&lt;Super&gt;Down']</default>
+      <summary>Tauscht mit unterem Nachbarfenster</summary>
+    </key>
+
+  </schema>
+</schemalist>
