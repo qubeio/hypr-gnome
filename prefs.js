@@ -48,10 +48,10 @@ function buildPrefsWidget() {
     store.set_column_types([ GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_INT, GObject.TYPE_INT ]);
 
     addKeybinding(store, settings, 'swap-master-window', 'Master-Fenster tauschen');
-    addKeybinding(store, settings, 'swap-left-window', 'Fenster nach links tauschen');
-    addKeybinding(store, settings, 'swap-right-window', 'Fenster nach rechts tauschen');
-    addKeybinding(store, settings, 'swap-up-window', 'Fenster nach oben tauschen');
-    addKeybinding(store, settings, 'swap-down-window', 'Fenster nach unten tauschen');
+    addKeybinding(store, settings, 'swap-left-window', 'Nach links tauschen');
+    addKeybinding(store, settings, 'swap-right-window', 'Nach rechts tauschen');
+    addKeybinding(store, settings, 'swap-up-window', 'Nach oben tauschen');
+    addKeybinding(store, settings, 'swap-down-window', 'Nach unten tauschen');
     
     let treeView = new Gtk.TreeView({ model: store, headers_visible: false, hexpand: true, visible: true });
     keysBox.add(treeView);
@@ -92,7 +92,7 @@ function buildPrefsWidget() {
     // ---------------------------------------------------- //
     // Section for Window Gaps                              //
     // ---------------------------------------------------- //
-    const gapsTitle = new Gtk.Label({ label: '<b>Fensterabstände (Gaps)</b>', use_markup: true, halign: Gtk.Align.START, visible: true });
+    const gapsTitle = new Gtk.Label({ label: '<b>Abstände (Gaps)</b>', use_markup: true, halign: Gtk.Align.START, visible: true });
     const gapsFrame = new Gtk.Frame({ label_widget: gapsTitle, shadow_type: Gtk.ShadowType.NONE, visible: true });
     const gapsGrid = new Gtk.Grid({ margin: 12, column_spacing: 12, row_spacing: 12, visible: true });
     gapsFrame.add(gapsGrid);
@@ -102,16 +102,42 @@ function buildPrefsWidget() {
     addSpinButtonRow(gapsGrid, settings, "Äußerer Abstand (vertikal)", "outer-gap-vertical", 2);
 
     prefsWidget.add(gapsFrame);
+
+    // ---------------------------------------------------- //
+    // Section for Window Behavior (Master vs. Stack)       //
+    // ---------------------------------------------------- //
+    const behaviorTitle = new Gtk.Label({ label: '<b>Verhalten</b>', use_markup: true, halign: Gtk.Align.START, visible: true });
+    const behaviorFrame = new Gtk.Frame({ label_widget: behaviorTitle, shadow_type: Gtk.ShadowType.NONE, visible: true });
+    const behaviorGrid = new Gtk.Grid({ margin: 12, column_spacing: 12, row_spacing: 12, visible: true });
+    behaviorFrame.add(behaviorGrid);
     
+    const comboLabel = new Gtk.Label({ label: "Neues Fenster öffnen als", halign: Gtk.Align.START, visible: true });
+    behaviorGrid.attach(comboLabel, 0, 0, 1, 1);
+
+    const comboBox = new Gtk.ComboBoxText({ visible: true, halign: Gtk.Align.END });
+    comboBox.append('stack', 'Stack-Fenster (Standard)');
+    comboBox.append('master', 'Master-Fenster');
+    
+    comboBox.set_active_id(settings.get_string('new-window-behavior'));
+
+    comboBox.connect('changed', () => {
+        settings.set_string('new-window-behavior', comboBox.get_active_id());
+    });
+    
+    behaviorGrid.attach(comboBox, 1, 0, 1, 1);
+    prefsWidget.add(behaviorFrame);
+
     return prefsWidget;
 }
 
 function addKeybinding(model, settings, id, description) {
     let [key, mods] = [0, 0];
+    
     const strv = settings.get_strv(id);
     if (strv && strv.length > 0 && strv[0]) {
         [key, mods] = Gtk.accelerator_parse(strv[0]);
     }
+
     let iter = model.append();
     model.set(iter, 
         [COLUMN_ID, COLUMN_DESC, COLUMN_KEY, COLUMN_MODS], 
