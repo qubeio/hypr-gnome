@@ -1,5 +1,4 @@
- <img width="30" height="30" alt="Simple-Tiling Logo" src="https://github.com/user-attachments/assets/c9538d7f-f417-4ff5-8d8b-7d76fdf44f01" /> 
- # Simple Tiling
+# Simple Tiling
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GNOME Shell Version](https://img.shields.io/badge/GNOME%20Shell-3.38-blue)
