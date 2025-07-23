@@ -78,7 +78,7 @@ An Example of an exceptions.txt can be found in the repo.
 
 #### Adjusting inner and/or outer Window Gaps / Margins
 
-You can adjust the window gap margins (inner gaps between windows, outer gaps horizontal as well as vertical) in the Settings panel of Simple Tiling (which can be found in the Gnome Extesion Application).
+You can adjust the window gap margins (inner gaps between windows, outer gaps horizontal as well as vertical) in the Settings panel of Simple Tiling (which can be found in the Gnome Extension Application).
 
 #### Adjusting Tiling Window Delays
 
