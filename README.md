@@ -57,7 +57,7 @@ Use the [GNOME Shell Extensions website](https://extensions.gnome.org/extension/
 
 #### Keyboard Shortcuts
 
-All keyboard shortcuts can be configured through the standard GNOME Settings panel:
+All keyboard shortcuts can be configured through the Settings panel of Simple Tiling (which can be found in the Gnome Extesion Application):
 1.  Open **Settings**.
 2.  Navigate to **Keyboard** -> **View and Customize Shortcuts**.
 3.  Scroll down to the **Custom Shortcuts** section at the bottom.
@@ -75,16 +75,20 @@ To find an application's `WM_CLASS`, open a terminal and run the command `xprop 
 
 An Example of an exceptions.txt can be found in the repo.
 
-#### Adjusting inner and/or outer window gaps and tiling delays
+#### Adjusting inner and/or outer Window Gaps / Margins
 
-To adjust the inner and/or outer gaps of the windows you need to open the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extension.js) and look at line 214. Here you can also adjust some timing delays if you have race condition issues.
+You can adjust the window gap margins (inner gaps between windows, outer gaps horizontal as well as vertical) in the Settings panel of Simple Tiling (which can be found in the Gnome Extesion Application).
+
+#### Adjusting Tiling Delays
+
+If you have race condition issues between mutter (Gnome WM) and the Simple Tiling extension, you can adjust the window delay settings (both for tiling windows as well as for centered application from the exceptions list) directly in the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extension.js). You will find the parameter at line 222 (commented). Defaults to "20" for General Tiling Window Delay and "5" for centered Apps on the Exception List.
 
 ## Future Development
 
 This extension was built to solve a specific need. However, future enhancements could include:
 * Multi-monitor support.
 * Additional layout algorithms.
-* A more detailed settings panel to configure gaps and other options via a GUI.
+* A more detailed settings panel to configure other options via a GUI.
 
 ## License
 
