@@ -37,7 +37,7 @@ Please note that this extension has been developed for a very specific environme
 
 #### From extensions.gnome.org (Recommended)
 
-*(Link to be added once the extension is published)*
+[*(Gnome Shell Extension Website)*](https://extensions.gnome.org/extension/8345/simple-tiling/)
 
 #### Manual Installation
 
