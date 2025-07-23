@@ -93,7 +93,7 @@ This extension was built to solve a specific need. However, future enhancements 
 
 ## Misc
 
-I recommend to add also [Focus Changer](https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer) as an extension to make navigating between windows super easy. With Foocus Changer you can set keybindings (e.g. "Alt" + "Arrow-Keys") to change the selected / active window on a given workspace. Once selected you can now (with Simple Tiling) swap the selected window with an yother window on your workspace (e.g. "Super" + "Arrow-Key"). Its super handy and really simple.
+I recommend to add also [Focus Changer](https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer) as an extension to make navigating between windows super easy. With Foocus Changer you can set keybindings (e.g. "Alt" + "Arrow-Keys") to change the selected / active window on a given workspace. Once selected you can now (with Simple Tiling) swap the selected window with any other window on your workspace (e.g. "Super" + "Arrow-Key"). Its super handy and really simple.
 
 ## License
 
