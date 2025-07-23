@@ -1,5 +1,5 @@
 // ---------------------------------------------------- //
-// Simple-Tiling – GNOME Shell 3.38 (X11) - Version 2   //
+// Simple-Tiling – GNOME Shell 3.38 (X11) - Version 3   //
 // © 2025 domoel – MIT                                  //
 // ---------------------------------------------------- //
 
@@ -310,11 +310,17 @@ class Tiler {
         }
         
         if (this._isTileable(win)) {
-            this.windows.push(win);
+            if (this._settings.get_string('new-window-behavior') === 'master') {
+                this.windows.unshift(win);
+            } else {
+                this.windows.push(win);
+            }
+
             const id = win.get_id();
             this._signalIds.set(`unmanaged-${id}`, { object: win, id: win.connect('unmanaged', () => this._onWindowRemoved(null, win)) });
             this._signalIds.set(`size-changed-${id}`, { object: win, id: win.connect('size-changed', () => { if (!this.grabbedWindow) this.queueTile(); }) });
             this._signalIds.set(`minimized-${id}`, { object: win, id: win.connect('notify::minimized', this._onWindowMinimizedStateChanged) });
+            
             this.queueTile();
         }
     }
