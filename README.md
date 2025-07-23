@@ -93,6 +93,7 @@ If you have race condition issues between mutter (Gnome WM) and the Simple Tilin
 
 This extension was built to solve a specific need. However, future enhancements could include:
 * Multi-monitor support.
+* Support for newer Gnome shells
 * Additional layout algorithms.
 * A more detailed settings panel to configure other options via a GUI.
 
