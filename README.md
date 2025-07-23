@@ -1,12 +1,15 @@
 
-<center> 
-# Simple Tiling 
-</center>
+<h1 align="center">
+Simple Tiling 
+</span>
+<h4 align="center">
+<span style="display:inline-flex; align-items:center; gap:12px;">
+A lightweight, opinionated, and automatic tiling window manager for GNOME Shell 3.38.
+</span>
+<p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GNOME Shell Version](https://img.shields.io/badge/GNOME%20Shell-3.38-blue)
-
-A lightweight, opinionated, and automatic tiling window manager for GNOME Shell 3.38.
 
 <img width="2560" height="1440" alt="Simple-Tiling-v3" src="https://github.com/user-attachments/assets/42c64902-baab-4c84-9857-470f7f1ff035" />
 
