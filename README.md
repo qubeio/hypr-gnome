@@ -44,7 +44,7 @@ Please note that this extension has been developed for a very specific environme
 
 1.  **Clone the repository** into your local extensions directory:
     ```bash
-    git clone [[https://github.com/YOUR_USERNAME/YOUR_REPOSITORY](https://github.com/Domoel/Simple-Tiling).git](https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git) ~/.local/share/gnome-shell/extensions/simple-tiling@domoel
+    git clone https://github.com/Domoel/Simple-Tiling.git
     ```
 2.  **Compile the GSettings schema.** This is a mandatory step for the keyboard shortcuts to work.
     ```bash
