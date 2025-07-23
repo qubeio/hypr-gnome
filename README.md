@@ -81,13 +81,13 @@ An Example of an exceptions.txt can be found in the repo.
 
 You can adjust the window gap margins (inner gaps between windows, outer gaps horizontal as well as vertical) in the Settings panel of Simple Tiling (which can be found in the Gnome Extension Application).
 
-#### Adjusting Tiling Window Delays
-
-If you have race condition issues between mutter (Gnome WM) and the Simple Tiling extension, you can adjust the window delay settings (both for tiling windows as well as for centered application from the exceptions list) directly in the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extension.js). You will find the parameter at line 222 (commented). Defaults to "20" for General Tiling Window Delay and "5" for centered Apps on the Exception List.
-
 #### Configurable New Window Behavior
 
 A toogle setting allows you to control the behavior for newly opened windows. You can choose to either have them become the new master window (pushing the old master into the stack) or have them appended to the stack as the last window (Default).
+
+#### Adjusting Tiling Window Delays
+
+If you have race condition issues between mutter (Gnome WM) and the Simple Tiling extension, you can adjust the window delay settings (both for tiling windows as well as for centered application from the exceptions list) directly in the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extension.js). You will find the parameter at line 222 (commented). Defaults to "20" for General Tiling Window Delay and "5" for centered Apps on the Exception List.
 
 ## Future Development
 
