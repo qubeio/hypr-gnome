@@ -21,9 +21,10 @@ This extension was built from the ground up to be stable and performant on **GNO
 * **Interactive Window Swapping:**
     * **Drag & Drop:** Swap any two windows by simply dragging one and dropping it over the other.
     * **Keyboard Shortcuts:** A full set of keyboard shortcuts allows you to swap the focused window with the master or with its nearest neighbor in any direction (left, right, up, down).
-* **Configurable Gaps:** Easily configure inner and outer gaps by editing variables directly in the `extension.js` code to achieve your desired aesthetic.
+* **Simple Settings Panel:** A simple Settings panel within the gnome extension manager menu to adjust key bindings and windows gaps / margins.
 * **External Exception List:** Use a simple `exceptions.txt` file to list applications (by their `WM_CLASS`) that should be ignored by the tiling manager.
 * **Smart Pop-up Handling:** Windows on the exception list, as well as dialogs and other pop-ups, are automatically centered and kept "always on top" for a smooth workflow.
+* **Configurable Tiling Window delays:** Easily configure the Tiling Window Delays if you have race condition issues by editing variables directly in the `extension.js`.
 
 ## Requirements
 
@@ -79,7 +80,7 @@ An Example of an exceptions.txt can be found in the repo.
 
 You can adjust the window gap margins (inner gaps between windows, outer gaps horizontal as well as vertical) in the Settings panel of Simple Tiling (which can be found in the Gnome Extesion Application).
 
-#### Adjusting Tiling Delays
+#### Adjusting Tiling Window Delays
 
 If you have race condition issues between mutter (Gnome WM) and the Simple Tiling extension, you can adjust the window delay settings (both for tiling windows as well as for centered application from the exceptions list) directly in the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extension.js). You will find the parameter at line 222 (commented). Defaults to "20" for General Tiling Window Delay and "5" for centered Apps on the Exception List.
 
