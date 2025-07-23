@@ -75,6 +75,10 @@ To find an application's `WM_CLASS`, open a terminal and run the command `xprop 
 
 An Example of an exceptions.txt can be found in the repo.
 
+#### Adjusting inner and/or outer window gaps and tiling delays
+
+To adjust the inner and/or outer gaps of the windows you need to open the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extensions.js) and look at line 214. Here you can also adjust some timing delays if you have race condition issues.
+
 ## Future Development
 
 This extension was built to solve a specific need. However, future enhancements could include:
