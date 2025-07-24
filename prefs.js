@@ -66,41 +66,18 @@ function buildPrefsWidget() {
         GObject.TYPE_INT,
     ]);
 
-    addKeybinding(
-        store,
-        settings,
-        "swap-master-window",
-        "Master-Fenster tauschen"
-    );
-    addKeybinding(
-        store,
-        settings,
-        "swap-left-window",
-        "Fenster nach links tauschen"
-    );
-    addKeybinding(
-        store,
-        settings,
-        "swap-right-window",
-        "Fenster nach rechts tauschen"
-    );
-    addKeybinding(
-        store,
-        settings,
-        "swap-up-window",
-        "Fenster nach oben tauschen"
-    );
-    addKeybinding(
-        store,
-        settings,
-        "swap-down-window",
-        "Fenster nach unten tauschen"
-    );
+    addKeybinding(store, settings, "swap-master-window", "Master-Fenster tauschen");
+    
+    addKeybinding(store, settings, "swap-up-window", "Fenster nach oben tauschen");
+    addKeybinding(store, settings, "swap-down-window", "Fenster nach unten tauschen");
+    addKeybinding(store, settings, "swap-left-window", "Fenster nach links tauschen");
+    addKeybinding(store, settings, "swap-right-window", "Fenster nach rechts tauschen");    
 
-    addKeybinding(store, settings, "focus-left", "Fokus nach links wechseln");
-    addKeybinding(store, settings, "focus-right", "Fokus nach rechts wechseln");
     addKeybinding(store, settings, "focus-up", "Fokus nach oben wechseln");
     addKeybinding(store, settings, "focus-down", "Fokus nach unten wechseln");
+    addKeybinding(store, settings, "focus-left", "Fokus nach links wechseln");
+    addKeybinding(store, settings, "focus-right", "Fokus nach rechts wechseln");
+
 
     let treeView = new Gtk.TreeView({
         model: store,
