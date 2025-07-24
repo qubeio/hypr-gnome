@@ -6,14 +6,6 @@
       <default><![CDATA[['<Super>Return']]]></default>
       <summary>Tauscht das fokussierte Fenster mit dem Master.</summary>
     </key>
-    <key name="swap-left-window" type="as">
-      <default><![CDATA[['<Super>Left']]]></default>
-      <summary>Tauscht das Fenster mit dem linken Nachbarn.</summary>
-    </key>
-    <key name="swap-right-window" type="as">
-      <default><![CDATA[['<Super>Right']]]></default>
-      <summary>Tauscht das Fenster mit dem rechten Nachbarn.</summary>
-    </key>
     <key name="swap-up-window" type="as">
       <default><![CDATA[['<Super>Up']]]></default>
       <summary>Tauscht das Fenster mit dem oberen Nachbarn.</summary>
@@ -22,21 +14,29 @@
       <default><![CDATA[['<Super>Down']]]></default>
       <summary>Tauscht das Fenster mit dem unteren Nachbarn.</summary>
     </key>
+    <key name="swap-left-window" type="as">
+      <default><![CDATA[['<Super>Left']]]></default>
+      <summary>Tauscht das Fenster mit dem linken Nachbarn.</summary>
+    </key>
+    <key name="swap-right-window" type="as">
+      <default><![CDATA[['<Super>Right']]]></default>
+      <summary>Tauscht das Fenster mit dem rechten Nachbarn.</summary>
+    </key>
     
     <key name="focus-up" type="as">
-      <default><![CDATA[['<Alt>k']]]></default>
+      <default><![CDATA[['<Alt>Up']]]></default>
       <summary>Fokus zum oberen Fenster wechseln.</summary>
     </key>
     <key name="focus-down" type="as">
-      <default><![CDATA[['<Alt>j']]]></default>
+      <default><![CDATA[['<Alt>Down']]]></default>
       <summary>Fokus zum unteren Fenster wechseln.</summary>
     </key>
     <key name="focus-left" type="as">
-      <default><![CDATA[['<Alt>h']]]></default>
+      <default><![CDATA[['<Alt>Left']]]></default>
       <summary>Fokus zum linken Fenster wechseln.</summary>
     </key>
     <key name="focus-right" type="as">
-      <default><![CDATA[['<Alt>l']]]></default>
+      <default><![CDATA[['<Alt>Right']]]></default>
       <summary>Fokus zum rechten Fenster wechseln.</summary>
     </key>
 
