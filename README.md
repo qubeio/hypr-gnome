@@ -11,7 +11,7 @@ A lightweight, opinionated, and automatic tiling window manager for GNOME Shell 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GNOME Shell Version](https://img.shields.io/badge/GNOME%20Shell-3.38-blue)
 
-<img width="2560" height="1440" alt="Simple-Tiling-v3" src="https://github.com/user-attachments/assets/42c64902-baab-4c84-9857-470f7f1ff035" />
+<img width="2560" height="1440" alt="Simple Tiling v4" src="https://github.com/user-attachments/assets/b080483e-40fe-4ea2-b0dd-56fcb587f9b8" />
 
 ## Introduction
 
@@ -28,6 +28,7 @@ This extension was built from the ground up to be stable and performant on **GNO
 * **Interactive Window Swapping:**
     * **Drag & Drop:** Swap any two windows by simply dragging one and dropping it over the other.
     * **Keyboard Shortcuts:** A full set of keyboard shortcuts allows you to swap the focused window with the master or with its nearest neighbor in any direction (left, right, up, down).
+* **Window Focus Switcher:** Change the current window focus with a set of customizable keyboard shortcuts in every direction.
 * **Simple Settings Panel:** A simple settings panel within the gnome extension manager menu to adjust key bindings and window gaps / margins.
 * **External Exception List:** Use a simple `exceptions.txt` file to list applications (by their `WM_CLASS`) that should be ignored by the tiling manager.
 * **Smart Pop-up Handling:** Windows on the exception list, as well as dialogs and other pop-ups, are automatically centered and kept "always on top" for a smooth workflow.
@@ -95,7 +96,7 @@ A toogle setting allows you to control the behavior for newly opened windows. Yo
 
 #### Adjusting Tiling Window Delays
 
-If you have race condition issues between mutter (Gnome WM) and the Simple Tiling extension, you can adjust the window delay settings (both for tiling windows as well as for centered application from the exceptions list) directly in the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extension.js). You will find the parameter at line 222 (commented). Defaults to "20" for General Tiling Window Delay and "5" for centered Apps on the Exception List.
+If you have race condition issues between mutter (Gnome WM) and the Simple Tiling extension, you can adjust the window delay settings (both for tiling windows as well as for centered application from the exceptions list) directly in the extensions.js (~/.local/share/gnome-shell/extensions/simple-tiling@domoel/extension.js). You will find the parameter at line 17 & 18. Defaults to "20" for General Tiling Window Delay and "5" for centered Apps on the Exception List.
 
 ## Future Development
 
@@ -104,10 +105,6 @@ This extension was built to solve a specific need. However, future enhancements 
 * Support for newer Gnome shells
 * Additional layout algorithms.
 * A more detailed settings panel to configure other options via a GUI.
-
-## Misc
-
-I recommend to add also [Focus Changer](https://github.com/martinhjartmyr/gnome-shell-extension-focus-changer) as an extension to make navigating between windows super easy. With Foocus Changer you can set keybindings (e.g. "Alt" + "Arrow-Keys") to change the selected / active window on a given workspace. Once selected you can now (with Simple Tiling) swap the selected window with any other window on your workspace (e.g. "Super" + "Arrow-Key"). Its super handy and really simple.
 
 ## License
 
