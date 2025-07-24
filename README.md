@@ -83,7 +83,7 @@ To find an application's `WM_CLASS`, open a terminal and run the command `xprop 
 
 An Example of an exceptions.txt can be found in the repo.
 
-Ignoered applications will be opened screen centered and kept above all other windows. These applications can be moved across the screen in floating mode.
+Ignored applications will be opened screen centered and kept above all other windows. These applications can be moved across the screen in floating mode.
 
 #### Adjusting inner and/or outer Window Gaps / Margins
 
