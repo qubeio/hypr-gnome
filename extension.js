@@ -1,5 +1,5 @@
 // ---------------------------------------------------- //
-// Simple-Tiling – GNOME Shell 3.38 (X11) - Version 4   //
+// Simple-Tiling – GNOME Shell 3.38 (X11) - Version 5   //
 // © 2025 domoel – MIT                                  //
 // ---------------------------------------------------- //
 
@@ -9,7 +9,6 @@
 const Main = imports.ui.main;
 const Meta = imports.gi.Meta;
 const Shell = imports.gi.Shell;
-const Mainloop = imports.mainloop;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const ExtensionUtils = imports.misc.extensionUtils;
@@ -88,6 +87,7 @@ class InteractionHandler {
             this._settingsChangedId = null;
         }
         this._grabOpIds.forEach((id) => global.display.disconnect(id));
+        this._grabOpIds = [];
     }
 
    _bind(key, callback) {
@@ -325,6 +325,9 @@ class Tiler {
         this._exceptions = [];
         this._interactionHandler = new InteractionHandler(this);
 
+        this._tileTimeoutId = null;
+        this._centerTimeoutIds = [];
+
         this._onWindowAdded = this._onWindowAdded.bind(this);
         this._onWindowRemoved = this._onWindowRemoved.bind(this);
         this._onActiveWorkspaceChanged = this._onActiveWorkspaceChanged.bind(
@@ -355,6 +358,13 @@ class Tiler {
     }
 
     disable() {
+        if (this._tileTimeoutId) {
+            GLib.source_remove(this._tileTimeoutId);
+            this._tileTimeoutId = null;
+        }
+        this._centerTimeoutIds.forEach(id => GLib.source_remove(id));
+        this._centerTimeoutIds = [];
+
         this._interactionHandler.disable();
         this._disconnectFromWorkspace();
         for (const [, signal] of this._signalIds) {
@@ -408,7 +418,12 @@ class Tiler {
     }
 
     _centerWindow(win) {
-        Mainloop.timeout_add(this._centeringDelay, () => {
+        const timeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, this._centeringDelay, () => {
+            const index = this._centerTimeoutIds.indexOf(timeoutId);
+            if (index > -1) {
+                this._centerTimeoutIds.splice(index, 1);
+            }
+            
             if (!win || !win.get_display()) return GLib.SOURCE_REMOVE;
             if (win.get_maximized()) {
                 win.unmaximize(Meta.MaximizeFlags.BOTH);
@@ -423,7 +438,7 @@ class Tiler {
                 workArea.x + Math.floor((workArea.width - frame.width) / 2),
                 workArea.y + Math.floor((workArea.height - frame.height) / 2)
             );
-            Mainloop.idle_add(() => {
+            GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
                 if (win.get_display()) {
                     if (typeof win.set_keep_above === "function")
                         win.set_keep_above(true);
@@ -434,6 +449,8 @@ class Tiler {
             });
             return GLib.SOURCE_REMOVE;
         });
+
+        this._centerTimeoutIds.push(timeoutId);
     }
 
     _onWindowMinimizedStateChanged() {
@@ -535,11 +552,13 @@ class Tiler {
     }
 
     queueTile() {
-        if (this._tileInProgress) return;
+        if (this._tileInProgress || this._tileTimeoutId) return;
         this._tileInProgress = true;
-        Mainloop.timeout_add(this._tilingDelay, () => {
+        
+        this._tileTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, this._tilingDelay, () => {
             this._tileWindows();
             this._tileInProgress = false;
+            this._tileTimeoutId = null;
             return GLib.SOURCE_REMOVE;
         });
     }
