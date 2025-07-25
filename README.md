@@ -66,7 +66,7 @@ Use the [GNOME Shell Extensions website](https://extensions.gnome.org/extension/
 
 #### Keyboard Shortcuts
 
-All keyboard shortcuts can be configured through the Settings panel of Simple Tiling (which can be found in the Gnome Extesion Application):
+All keyboard shortcuts can be configured through the Settings panel of Simple Tiling (which can be found in the Gnome Extension Application):
 1.  Open **Settings**.
 2.  Navigate to **Keyboard** -> **View and Customize Shortcuts**.
 3.  Scroll down to the **Custom Shortcuts** section at the bottom.
