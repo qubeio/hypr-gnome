@@ -1,5 +1,5 @@
 // ------------------------------------------------------ //
-// Extension Settings Menu for Simple Tiling - Version 4  //
+// Extension Settings Menu for Simple Tiling - Version 5  //
 // © 2025 domoel – MIT                                    //
 // ------------------------------------------------------ //
 
@@ -77,7 +77,6 @@ function buildPrefsWidget() {
     addKeybinding(store, settings, "focus-down", "Fokus nach unten wechseln");
     addKeybinding(store, settings, "focus-left", "Fokus nach links wechseln");
     addKeybinding(store, settings, "focus-right", "Fokus nach rechts wechseln");
-
 
     let treeView = new Gtk.TreeView({
         model: store,
