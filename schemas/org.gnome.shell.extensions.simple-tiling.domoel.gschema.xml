@@ -4,59 +4,59 @@
     
     <key name="swap-master-window" type="as">
       <default><![CDATA[['<Super>Return']]]></default>
-      <summary>Tauscht das fokussierte Fenster mit dem Master.</summary>
+      <summary>Swap focused window with master.</summary>
     </key>
     <key name="swap-up-window" type="as">
       <default><![CDATA[['<Super>Up']]]></default>
-      <summary>Tauscht das Fenster mit dem oberen Nachbarn.</summary>
+      <summary>Swap current window with window above.</summary>
     </key>
     <key name="swap-down-window" type="as">
       <default><![CDATA[['<Super>Down']]]></default>
-      <summary>Tauscht das Fenster mit dem unteren Nachbarn.</summary>
+      <summary>Swap current window with window below.</summary>
     </key>
     <key name="swap-left-window" type="as">
       <default><![CDATA[['<Super>Left']]]></default>
-      <summary>Tauscht das Fenster mit dem linken Nachbarn.</summary>
+      <summary>Swap current window with window to the left.</summary>
     </key>
     <key name="swap-right-window" type="as">
       <default><![CDATA[['<Super>Right']]]></default>
-      <summary>Tauscht das Fenster mit dem rechten Nachbarn.</summary>
+      <summary>Swap current window with window to the right.</summary>
     </key>
     
     <key name="focus-up" type="as">
       <default><![CDATA[['<Alt>Up']]]></default>
-      <summary>Fokus zum oberen Fenster wechseln.</summary>
+      <summary>Focus window above.</summary>
     </key>
     <key name="focus-down" type="as">
       <default><![CDATA[['<Alt>Down']]]></default>
-      <summary>Fokus zum unteren Fenster wechseln.</summary>
+      <summary>Focus window below.</summary>
     </key>
     <key name="focus-left" type="as">
       <default><![CDATA[['<Alt>Left']]]></default>
-      <summary>Fokus zum linken Fenster wechseln.</summary>
+      <summary>Focus window to the left.</summary>
     </key>
     <key name="focus-right" type="as">
       <default><![CDATA[['<Alt>Right']]]></default>
-      <summary>Fokus zum rechten Fenster wechseln.</summary>
+      <summary>Focus window to the right.</summary>
     </key>
 
     <key name="inner-gap" type="i">
       <default>10</default>
-      <summary>Der Abstand zwischen den Fenstern in Pixeln.</summary>
+      <summary>The gap between windows in pixels.</summary>
     </key>
     <key name="outer-gap-horizontal" type="i">
       <default>5</default>
-      <summary>Der Abstand zum linken und rechten Bildschirmrand.</summary>
+      <summary>The gap to the left and right screen edges.</summary>
     </key>
     <key name="outer-gap-vertical" type="i">
       <default>5</default>
-      <summary>Der Abstand zum oberen und unteren Bildschirmrand.</summary>
+      <summary>The gap to the top and bottom screen edges.</summary>
     </key>
 
     <key name="new-window-behavior" type="s">
       <default>'stack'</default>
-      <summary>Verhalten für neu geöffnete Fenster.</summary>
-      <description>Legt fest, ob ein neues Fenster als Master oder als Teil des Stacks hinzugefügt wird.</description>
+      <summary>Behavior for newly opened windows.</summary>
+      <description>Determines if a new window is added as master or stack window.</description>
     </key>
     
   </schema>
