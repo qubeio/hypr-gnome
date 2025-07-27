@@ -1,11 +1,13 @@
-# --- Ausnahmeliste für den Tiler ---
-# Jede Zeile enthält die WM_CLASS einer Anwendung, die ignoriert werden soll.
-# Die Groß- und Kleinschreibung wird ignoriert.
+# --- Exception List for Tiling Windows ---
+# Each line contains the WM_CLASS of an application that should be ignored.
+# Uppercase and lowercase letters are ignored.
 
-# Befehl zum Finden der WM_CLASS:
-# 1. Terminal öffnen
-# 2. 'xprop WM_CLASS' eingeben und Enter drücken
-# 3. Mit dem Kreuz auf das gewünschte Fenster klicken
+# Command to find WM_CLASS:
+# 1. Open Terminal
+# 2. Type ‘xprop WM_CLASS’ and press Enter.
+# 3. Click on the desired window with your mouse.
 
+extension-manager
 gnome-screenshot
-
+org.gnome.NautilusPreviewer
+org.gnome.Shell.Extensions
