@@ -11,7 +11,7 @@ A lightweight, opinionated, and automatic tiling window manager for GNOME Shell 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GNOME Shell Version](https://img.shields.io/badge/GNOME%20Shell-3.38-blue)
 
-<img width="2560" height="1440" alt="Simple-Tiling-v6" src="https://github.com/user-attachments/assets/93090f7f-d348-4d94-bfe3-33df363a1138" />
+<img width="2560" height="1440" alt="Simple-Tiling-v6" src="https://github.com/user-attachments/assets/eb0f7cc3-6a5a-4036-8a1e-8f945c52e55c" />
 
 ## Introduction
 
