@@ -1,5 +1,5 @@
 // ------------------------------------------------------ //
-// Extension Settings Menu for Simple Tiling - Version 5  //
+// Extension Settings Menu for Simple Tiling - Version 6  //
 // © 2025 domoel – MIT                                    //
 // ------------------------------------------------------ //
 
@@ -40,7 +40,7 @@ function buildPrefsWidget() {
     // Section for Keybindings                              //
     // ---------------------------------------------------- //
     const keysTitle = new Gtk.Label({
-        label: "<b>Tastenkürzel</b>",
+        label: "<b>Keybindings</b>",
         use_markup: true,
         halign: Gtk.Align.START,
         visible: true,
@@ -66,17 +66,17 @@ function buildPrefsWidget() {
         GObject.TYPE_INT,
     ]);
 
-    addKeybinding(store, settings, "swap-master-window", "Master-Fenster tauschen");
+    addKeybinding(store, settings, "swap-master-window", "Swap current window with master");
     
-    addKeybinding(store, settings, "swap-up-window", "Fenster nach oben tauschen");
-    addKeybinding(store, settings, "swap-down-window", "Fenster nach unten tauschen");
-    addKeybinding(store, settings, "swap-left-window", "Fenster nach links tauschen");
-    addKeybinding(store, settings, "swap-right-window", "Fenster nach rechts tauschen");    
+    addKeybinding(store, settings, "swap-up-window", "Swap current window with window above");
+    addKeybinding(store, settings, "swap-down-window", "Swap current window with window below");
+    addKeybinding(store, settings, "swap-left-window", "Swap current window with window to the left");
+    addKeybinding(store, settings, "swap-right-window", "Swap current window with window to the right");    
 
-    addKeybinding(store, settings, "focus-up", "Fokus nach oben wechseln");
-    addKeybinding(store, settings, "focus-down", "Fokus nach unten wechseln");
-    addKeybinding(store, settings, "focus-left", "Fokus nach links wechseln");
-    addKeybinding(store, settings, "focus-right", "Fokus nach rechts wechseln");
+    addKeybinding(store, settings, "focus-up", "Focus window above");
+    addKeybinding(store, settings, "focus-down", "Focus window below");
+    addKeybinding(store, settings, "focus-left", "Focus window to the left");
+    addKeybinding(store, settings, "focus-right", "Focus window to the right");
 
     let treeView = new Gtk.TreeView({
         model: store,
@@ -126,7 +126,7 @@ function buildPrefsWidget() {
     // Section for Window Gaps                              //
     // ---------------------------------------------------- //
     const gapsTitle = new Gtk.Label({
-        label: "<b>Fensterabstände (Gaps)</b>",
+        label: "<b>Window Gaps</b>",
         use_markup: true,
         halign: Gtk.Align.START,
         visible: true,
@@ -144,18 +144,18 @@ function buildPrefsWidget() {
     });
     gapsFrame.add(gapsGrid);
 
-    addSpinButtonRow(gapsGrid, settings, "Innerer Abstand", "inner-gap", 0);
+    addSpinButtonRow(gapsGrid, settings, "Inner Gap", "inner-gap", 0);
     addSpinButtonRow(
         gapsGrid,
         settings,
-        "Äußerer Abstand (horizontal)",
+        "Outer Gap (horizontal)",
         "outer-gap-horizontal",
         1
     );
     addSpinButtonRow(
         gapsGrid,
         settings,
-        "Äußerer Abstand (vertikal)",
+        "Outer Gap (vertical)",
         "outer-gap-vertical",
         2
     );
@@ -166,7 +166,7 @@ function buildPrefsWidget() {
     // Section for Window Behavior (Master vs. Stack)       //
     // ---------------------------------------------------- //
     const behaviorTitle = new Gtk.Label({
-        label: "<b>Fensterverhalten</b>",
+        label: "<b>Window Behavior</b>",
         use_markup: true,
         halign: Gtk.Align.START,
         visible: true,
@@ -186,7 +186,7 @@ function buildPrefsWidget() {
     addComboBoxRow(
         behaviorGrid,
         settings,
-        "Neues Fenster öffnen als",
+        "Open new windows as",
         "new-window-behavior",
         0
     );
@@ -237,8 +237,8 @@ function addComboBoxRow(grid, settings, desc, key, pos) {
         visible: true,
         halign: Gtk.Align.END,
     });
-    combo.append("stack", "Stack-Fenster (Standard)");
-    combo.append("master", "Master-Fenster");
+    combo.append("stack", "Stack Window (Default)");
+    combo.append("master", "Master Window");
     combo.set_active_id(settings.get_string(key));
     combo.connect("changed", () => {
         settings.set_string(key, combo.get_active_id());
