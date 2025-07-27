@@ -4,7 +4,7 @@
     
     <key name="swap-master-window" type="as">
       <default><![CDATA[['<Super>Return']]]></default>
-      <summary>Swap focused window with master.</summary>
+      <summary>Swap current window with master.</summary>
     </key>
     <key name="swap-up-window" type="as">
       <default><![CDATA[['<Super>Up']]]></default>
