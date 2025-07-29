@@ -98,13 +98,13 @@ All keyboard shortcuts can be configured through the Settings panel of Simple Ti
 
 #### Ignoring Applications (`exceptions.txt`)
 
-To prevent an application from being tiled, you can add its `WM_CLASS` to the `exceptions.txt` file in the extension's directory.
+To prevent an application from being tiled, you can add its `WM_CLASS` (x11) or App ID (Wayland) to the `exceptions.txt` file in the extension's directory.
 
-* Each application's `WM_CLASS` should be on a new line.
+* Each application's `WM_CLASS` or `App ID` should be on a new line.
 * Lines starting with `#` are treated as comments and are ignored.
 * The check is case-insensitive.
 
-To find an application's `WM_CLASS`, open a terminal and run the command `xprop WM_CLASS`. Your cursor will turn into a crosshair. Click on the window of the application you want to exclude. 
+To find an application's `WM_CLASS`, open a terminal and run the command `xprop WM_CLASS`. Your cursor will turn into a crosshair. Click on the window of the application you want to exclude. To find the App ID, Press Alt + F2, type 'lg', and press Enter. In the Looking Glass window, click the "Windows" tab. Click on the desired window to see its details. Find the value for "app id" and add it to a new line below.
 
 An Example of an exceptions.txt can be found in the repo.
 
