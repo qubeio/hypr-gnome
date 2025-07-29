@@ -4,12 +4,11 @@ Simple Tiling
 </span>
 <h4 align="center">
 <span style="display:inline-flex; align-items:center; gap:12px;">
-A lightweight, opinionated, and automatic tiling window manager for GNOME Shell 3.38.
+A lightweight, opinionated, and automatic tiling window manager for GNOME Shell
 </span>
 <p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![GNOME Shell Version](https://img.shields.io/badge/GNOME%20Shell-3.38-blue)
 
 <img width="2560" height="1440" alt="Simple-Tiling-v6" src="https://github.com/user-attachments/assets/eb0f7cc3-6a5a-4036-8a1e-8f945c52e55c" />
 
@@ -36,10 +35,10 @@ This extension was built from the ground up to be stable and performant on **GNO
 
 ## Requirements
 
-Please note that this extension has been developed for a very specific environment:
+Please note that this extension has been developed for a very specific environment. However, with the latest updates, I have ensured that modern Gnome Shells and Wayland are also supported.
 
-* **GNOME Shell Version:** **3.38**
-* **Session Type:** **X11** (Wayland is not supported).
+* **GNOME Shell Version:** **3.38 - 48**
+* **Session Type:** **X11** (Wayland is still in beta but should be fine!).
 * **Monitor Setup:** **Single monitor only.** Multi-monitor support is not yet implemented.
 
 ## Installation
@@ -50,26 +49,40 @@ Use the [GNOME Shell Extensions website](https://extensions.gnome.org/extension/
 
 #### Manual Installation
 
-1. **Navigate to your extensions folder:**
+The repository includes a Makefile that produces ready‑to‑install ZIP packages for the two supported GNOME‑Shell lines (a legacy build (Gnome-Shell 3.38 - 44) and a modern build for Gnome-Shell 45+).
 
+1. **Clone the Source**
+```bash
+git clone https://github.com/YourUser/Simple-Tiling.git
+cd Simple-Tiling
+```
+
+2 · **Create the package that matches your GNOME-Shell version**
+   Open the Terminal within the Simple-Tiling directory and run
    ```bash
-   cd ~/.local/share/gnome-shell/extensions/
+   make build
    ```
-3. **Clone the repository directly into a folder named after the extension's UUID:**
+   **Note:** This will create a ready to go .zip archive of both, the modern and the legacy version of the extension ready to be used. Alternativley you can also run "make build-legacy or make build-modern" to only compile one of both versions.
 
-   ```bash
-   git clone https://github.com/Domoel/Simple-Tiling.git simple-tiling@domoel
-   ```
-5.  **Compile the GSettings schema.** This is a mandatory step for the keyboard shortcuts to work.
+3 · **Locate the output**
+```bash
+ls -1 ../simple-tiling@domoel-*-v*.zip
+```
+4 · **Install & enable**
+```bash
+gnome-extensions install ../simple-tiling@domoel-legacy-v6.zip
+gnome-extensions enable  simple-tiling@domoel
+```
+**Note:** You can also unzip the file and put the folder right into your extensions directory (~/.local/share/gnome-shell/extensions/)
 
-    ```bash
-    cd ~/.local/share/gnome-shell/extensions/simple-tiling@domoel
-    glib-compile-schemas schemas/
-    ```
-    
-3.  **Restart GNOME Shell.** Press `Alt` + `F2`, type `r`, and press `Enter`.
-   
-5.  **Enable the extension** using the GNOME Extensions app or GNOME Tweaks.
+5 · **Reload the shell**
+```bash
+Press Alt + F2, type  r , hit ↩   (works for X11 and Wayland)
+```
+6 · **Clean up (optional)**
+```bash
+make clean        # removes build/ folder and generated ZIPs
+```
 
 **Note:** You have to use "simple-tiling@domoel" as your extension folder / directory. Put all necessary files into this directory. Otherwise the extension will not show up in extension manager.
 
@@ -113,7 +126,6 @@ If you have race condition issues between mutter (Gnome WM) and the Simple Tilin
 
 This extension was built to solve a specific need. However, future enhancements could include:
 * Multi-monitor support.
-* Support for newer Gnome shells
 * Additional layout algorithms.
 * A more detailed settings panel to configure other options via a GUI.
 
