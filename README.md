@@ -62,7 +62,7 @@ cd Simple-Tiling
    ```bash
    make build
    ```
-   **Note:** This will create a ready to go .zip archive of both, the modern and the legacy version of the extension ready to be used. Alternativley you can also run "make build-legacy" or "make build-modern" to only compile one of both versions.
+   **Note:** This will create a ready to go .zip archive of both, the modern and the legacy version of the extension ready to be used. Alternativley you can also run `make build-legacy` or `make build-modern` to only compile one of both versions.
 
 3 · **Locate the output**
 ```bash
@@ -73,7 +73,7 @@ ls -1 ../simple-tiling@domoel-*-v*.zip
 gnome-extensions install ../simple-tiling@domoel-legacy-v6.zip
 gnome-extensions enable  simple-tiling@domoel
 ```
-**Note:** You can also unzip the file and put the folder right into your extensions directory (~/.local/share/gnome-shell/extensions/)
+**Note:** You can also unzip the file and put the folder right into your extensions directory `(~/.local/share/gnome-shell/extensions/)`
 
 5 · **Reload the shell**
 ```bash
