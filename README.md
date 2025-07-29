@@ -62,7 +62,7 @@ cd Simple-Tiling
    ```bash
    make build
    ```
-   **Note:** This will create a ready to go .zip archive of both, the modern and the legacy version of the extension ready to be used. Alternativley you can also run "make build-legacy or make build-modern" to only compile one of both versions.
+   **Note:** This will create a ready to go .zip archive of both, the modern and the legacy version of the extension ready to be used. Alternativley you can also run "make build-legacy" or "make build-modern" to only compile one of both versions.
 
 3 · **Locate the output**
 ```bash
