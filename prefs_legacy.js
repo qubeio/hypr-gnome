@@ -1,11 +1,10 @@
-// ------------------------------------------------------ //
-// Extension Settings Menu for Simple Tiling - Version 6  //
-// © 2025 domoel – MIT                                    //
-// ------------------------------------------------------ //
+///////////////////////////////////////////////////////////////
+//   Simple‑Tiling – LEGACY MENU (GNOME Shell 3.38 ‑ 44)      //
+//                © 2025 domoel – MIT                        //
+/////////////////////////////////////////////////////////////
 
-// ---------------------------------------------------- //
-// Global Imports                                       //
-// ---------------------------------------------------- //
+
+// ── GLOBAL IMPORTS ────────────────────────────────────────
 "use strict";
 
 const { Gtk, GObject, Gio } = imports.gi;
@@ -13,9 +12,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 
 const SCHEMA_NAME = "org.gnome.shell.extensions.simple-tiling.domoel";
 
-// ---------------------------------------------------- //
-// Definition of Row Model                              //
-// ---------------------------------------------------- //
+// ── DEFINITIONS ────────────────────────────────────────────
 const COLUMN_ID = 0;
 const COLUMN_DESC = 1;
 const COLUMN_KEY = 2;
@@ -36,9 +33,7 @@ function buildPrefsWidget() {
         visible: true,
     });
 
-    // ---------------------------------------------------- //
-    // Section for Keybindings                              //
-    // ---------------------------------------------------- //
+    // ── KEYBINDINGS ────────────────────────────────────────────
     const keysTitle = new Gtk.Label({
         label: "<b>Keybindings</b>",
         use_markup: true,
@@ -122,9 +117,7 @@ function buildPrefsWidget() {
 
     prefsWidget.add(keysFrame);
 
-    // ---------------------------------------------------- //
-    // Section for Window Gaps                              //
-    // ---------------------------------------------------- //
+    // ── WINDOW GAPS ────────────────────────────────────────────
     const gapsTitle = new Gtk.Label({
         label: "<b>Window Gaps</b>",
         use_markup: true,
@@ -145,26 +138,12 @@ function buildPrefsWidget() {
     gapsFrame.add(gapsGrid);
 
     addSpinButtonRow(gapsGrid, settings, "Inner Gap", "inner-gap", 0);
-    addSpinButtonRow(
-        gapsGrid,
-        settings,
-        "Outer Gap (horizontal)",
-        "outer-gap-horizontal",
-        1
-    );
-    addSpinButtonRow(
-        gapsGrid,
-        settings,
-        "Outer Gap (vertical)",
-        "outer-gap-vertical",
-        2
-    );
+    addSpinButtonRow(gapsGrid, settings, "Outer Gap (horizontal)", "outer-gap-horizontal", 1);
+    addSpinButtonRow(gapsGrid, settings, "Outer Gap (vertical)", "outer-gap-vertical", 2);
 
     prefsWidget.add(gapsFrame);
 
-    // ---------------------------------------------------- //
-    // Section for Window Behavior (Master vs. Stack)       //
-    // ---------------------------------------------------- //
+    // ── WINDOW BEHAVIOR ────────────────────────────────────────────
     const behaviorTitle = new Gtk.Label({
         label: "<b>Window Behavior</b>",
         use_markup: true,
@@ -191,7 +170,8 @@ function buildPrefsWidget() {
         0
     );
     prefsWidget.add(behaviorFrame);
-
+    
+    prefsWidget.show_all();
     return prefsWidget;
 }
 
@@ -215,7 +195,7 @@ function addSpinButtonRow(grid, settings, desc, key, pos) {
         visible: true,
     });
     grid.attach(label, 0, pos, 1, 1);
-    const adj = new Gtk.Adjustment({ lower: 0, upper: 50, step_increment: 1 });
+    const adj = new Gtk.Adjustment({ lower: 0, upper: 100, step_increment: 1 });
     const spin = new Gtk.SpinButton({
         adjustment: adj,
         climb_rate: 1,
