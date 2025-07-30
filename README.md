@@ -65,26 +65,26 @@ The repository includes a Makefile that produces ready‑to‑install ZIP packag
    **Note:** This will create a ready to go .zip archive of both, the modern and the legacy version of the extension ready to be used. Alternativley you can also run `make build-legacy` or `make build-modern` to only compile one of both versions.
 
 3.  **Locate the output**
-   ```bash
-   ls -1 ../simple-tiling@domoel-*-v*.zip
-   ```
+    ```bash
+    ls -1 ../simple-tiling@domoel-*-v*.zip
+    ```
 4.  **Install & enable**
-   ```bash
-   gnome-extensions install ../simple-tiling@domoel-legacy-v6.zip
-   gnome-extensions enable  simple-tiling@domoel
-   ```
-   **Note:** You can also unzip the file and put the folder right into your extensions directory `(~/.local/share/gnome-shell/extensions/)`
+    ```bash
+    gnome-extensions install ../simple-tiling@domoel-legacy-v6.zip
+    gnome-extensions enable  simple-tiling@domoel
+    ```
+    **Note:** You can also unzip the file and put the folder right into your extensions directory `(~/.local/share/gnome-shell/extensions/)`
 
 5.  **Reload the shell**
-   ```bash
-   Press Alt + F2, type  r , hit ↩   (works for X11 and Wayland)
-   ```
+    ```bash
+    Press Alt + F2, type  r , hit ↩   (works for X11 and Wayland)
+    ```
 6.  **Clean up (optional)**
-   ```bash
-   make clean        # removes build/ folder and generated ZIPs
-   ```
+    ```bash
+    make clean        # removes build/ folder and generated ZIPs
+    ```
 
-   **Note:** You have to use "simple-tiling@domoel" as your extension folder / directory. Put all necessary files into this directory. Otherwise the extension will not show up in extension manager.
+    **Note:** You have to use "simple-tiling@domoel" as your extension folder / directory. Put all necessary files into this directory. Otherwise the extension will not show up in extension manager.
 
 ## Configuration
 
