@@ -1,6 +1,0 @@
-# GNOME Shell Extension specific
-schemas/gschemas.compiled
-
-# Common temporary files
-*~
-*.swp
