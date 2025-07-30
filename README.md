@@ -53,7 +53,7 @@ The repository includes a Makefile that produces ready‑to‑install ZIP packag
 
 1. **Clone the Source**
 ```bash
-git clone https://github.com/YourUser/Simple-Tiling.git
+git clone https://github.com/Domoel/Simple-Tiling.git
 cd Simple-Tiling
 ```
 
