@@ -49,7 +49,7 @@ Use the [GNOME Shell Extensions website](https://extensions.gnome.org/extension/
 
 #### Manual Installation
 
-The repository includes a Makefile that produces ready‑to‑install ZIP packages for the two supported GNOME‑Shell lines (a legacy build (Gnome-Shell 3.38 - 44) and a modern build for Gnome-Shell 45+).
+The repository includes a Makefile that produces ready‑to‑install ZIP packages for the two supported GNOME‑Shell lines (a legacy build Gnome-Shell 3.38 - 44 and a modern build for Gnome-Shell 45+).
 
 1. **Clone the Source**
    ```bash
