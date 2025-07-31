@@ -1,24 +1,22 @@
 ###############################################################################
-# Simple‑Tiling – Makefile
+# Simple-Tiling – Makefile
 #
-#  make build         → baut beide ZIP‑Pakete
-#  make build-legacy  → nur Legacy‑ZIP  (Shell 3.38‑44)
-#  make build-modern  → nur Modern‑ZIP  (Shell 45‑48)
-#  make clean         → räumt auf
+#  make build            → beide ZIP-Pakete
+#  make build-legacy     → nur Legacy-ZIP  (Shell 3.38-44)
+#  make build-modern     → nur Modern-ZIP  (Shell 45-48)
+#  make build-legacy-go  → Legacy-Ordner direkt ins Extension-Verzeichnis
+#  make build-modern-go  → Modern-Ordner direkt ins Extension-Verzeichnis
+#  make clean            → räumt auf
 ###############################################################################
 
 UUID     := simple-tiling@domoel
 VERSION  := 6
+EXTDIR   := $(HOME)/.local/share/gnome-shell/extensions
 
-# Dateien/Ordner, die in *beide* Pakete gehören
 COMMON_FILES := schemas exceptions.txt locale *.css README.md LICENSE
+LEGACY_PREFS := prefs_legacy.js
+MODERN_PREFS := prefs_modern.js
 
-# Pref‑Dateien (zwei Varianten)
-LEGACY_PREFS  := prefs_legacy.js
-MODERN_PREFS  := prefs_modern.js
-
-###############################################################################
-# Helfer: copies <file list> <dest>
 ###############################################################################
 define copies
 	@for f in $(1) ; do \
@@ -28,60 +26,82 @@ define copies
 	done
 endef
 
-.PHONY: build build-legacy build-modern clean
+.PHONY: build build-legacy build-modern \
+        build-legacy-go build-modern-go \
+        clean
+
 build: build-legacy build-modern
 
 ###############################################################################
-# Legacy‑Build
+# Legacy-ZIP (3.38-44)
 ###############################################################################
 build-legacy:
-	@echo "==> Building LEGACY package (3.38‑44)…"
+	@echo "==> Building LEGACY zip …"
 	@rm -rf build && mkdir -p build/$(UUID)
 	$(call copies,$(COMMON_FILES),build/$(UUID))
-
-	# Schema kompilieren
 	@glib-compile-schemas build/$(UUID)/schemas
-
-	# Haupt‑ und Pref‑Skript
 	@cp legacy.js       build/$(UUID)/extension.js
 	@cp $(LEGACY_PREFS) build/$(UUID)/prefs.js
-
-	# metadata.json anpassen
 	@sed -e "s/__UUID__/$(UUID)/g" \
 	     -e "s/__VERSION__/$(VERSION)/g" \
 	     metadata_legacy.json.in > build/$(UUID)/metadata.json
-
-	# Zip‑Paket
 	@cd build && zip -qr ../$(UUID)-legacy-v$(VERSION).zip .
 	@rm -rf build
-	@echo "✓ created $(UUID)-legacy-v$(VERSION).zip"
+	@echo "✓  $(UUID)-legacy-v$(VERSION).zip created"
 
 ###############################################################################
-# Modern‑Build
+# Modern-ZIP (45-48)
 ###############################################################################
 build-modern:
-	@echo "==> Building MODERN package (45‑48)…"
+	@echo "==> Building MODERN zip …"
 	@rm -rf build && mkdir -p build/$(UUID)
 	$(call copies,$(COMMON_FILES),build/$(UUID))
-
-	# Schema kompilieren
 	@glib-compile-schemas build/$(UUID)/schemas
-
-	# Haupt‑ und Pref‑Skript
 	@cp modern.js       build/$(UUID)/extension.js
 	@cp $(MODERN_PREFS) build/$(UUID)/prefs.js
-
-	# metadata.json anpassen
 	@sed -e "s/__UUID__/$(UUID)/g" \
 	     -e "s/__VERSION__/$(VERSION)/g" \
 	     metadata_modern.json.in > build/$(UUID)/metadata.json
-
-	# Zip‑Paket
 	@cd build && zip -qr ../$(UUID)-modern-v$(VERSION).zip .
 	@rm -rf build
-	@echo "✓ created $(UUID)-modern-v$(VERSION).zip"
+	@echo "✓  $(UUID)-modern-v$(VERSION).zip created"
+
+###############################################################################
+# “Go”-Targets – Ordner direkt installieren
+###############################################################################
+build-legacy-go:
+	@echo "==> Building & installing LEGACY folder …"
+	@rm -rf build && mkdir -p build/$(UUID)
+	$(call copies,$(COMMON_FILES),build/$(UUID))
+	@glib-compile-schemas build/$(UUID)/schemas
+	@cp legacy.js       build/$(UUID)/extension.js
+	@cp $(LEGACY_PREFS) build/$(UUID)/prefs.js
+	@sed -e "s/__UUID__/$(UUID)/g" \
+	     -e "s/__VERSION__/$(VERSION)/g" \
+	     metadata_legacy.json.in > build/$(UUID)/metadata.json
+	@rm -rf $(EXTDIR)/$(UUID)
+	@mkdir -p $(EXTDIR)
+	@mv build/$(UUID) $(EXTDIR)/
+	@rm -rf build
+	@echo "✓  Installed to $(EXTDIR)/$(UUID)"
+
+build-modern-go:
+	@echo "==> Building & installing MODERN folder …"
+	@rm -rf build && mkdir -p build/$(UUID)
+	$(call copies,$(COMMON_FILES),build/$(UUID))
+	@glib-compile-schemas build/$(UUID)/schemas
+	@cp modern.js       build/$(UUID)/extension.js
+	@cp $(MODERN_PREFS) build/$(UUID)/prefs.js
+	@sed -e "s/__UUID__/$(UUID)/g" \
+	     -e "s/__VERSION__/$(VERSION)/g" \
+	     metadata_modern.json.in > build/$(UUID)/metadata.json
+	@rm -rf $(EXTDIR)/$(UUID)
+	@mkdir -p $(EXTDIR)
+	@mv build/$(UUID) $(EXTDIR)/
+	@rm -rf build
+	@echo "✓  Installed to $(EXTDIR)/$(UUID)"
 
 ###############################################################################
 clean:
 	@rm -rf build $(UUID)-legacy-v$(VERSION).zip $(UUID)-modern-v$(VERSION).zip
-	@echo "Build‑Ordner und ZIPs entfernt."
+	@echo "Build directory and ZIPs removed."
