@@ -70,8 +70,7 @@ The repository includes a Makefile that produces ready‑to‑install ZIP packag
     ```
 4.  **Clean up (optional)**
     ```bash
-    # cd back in your downloaded folder (see 1)
-    make clean        # removes build/ folder and generated ZIPs
+    make clean        # perform this command in the downloaded folder to remove builds and generated ZIPs
     ```
 
     **Note:** You have to use "simple-tiling@domoel" as your extension folder / directory. Put all necessary files into this directory. Otherwise the extension will not show up in extension manager.
