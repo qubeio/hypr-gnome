@@ -1,12 +1,12 @@
 ###############################################################################
 # Simple-Tiling – Makefile
 #
-#  make build            → beide ZIP-Pakete
-#  make build-legacy     → nur Legacy-ZIP  (Shell 3.38-44)
-#  make build-modern     → nur Modern-ZIP  (Shell 45-48)
-#  make build-legacy-go  → Legacy-Ordner direkt ins Extension-Verzeichnis
-#  make build-modern-go  → Modern-Ordner direkt ins Extension-Verzeichnis
-#  make clean            → räumt auf
+#  make build            → Erzeugt beide ZIP-Pakete
+#  make build-legacy     → Erzeugt Legacy-ZIP (Shell 3.38-44)
+#  make build-modern     → Erzeugt Modern-ZIP (Shell 45-48)
+#  make build-legacy-go  → Installiert Legacy Erweiterung 
+#  make build-modern-go  → Installiert Modern Erweiterung
+#  make clean            → Räumt das Verzeichnis auf
 ###############################################################################
 
 UUID     := simple-tiling@domoel
