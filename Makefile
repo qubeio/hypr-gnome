@@ -1,12 +1,12 @@
 ###############################################################################
 # Simple-Tiling – Makefile
 #
-#  make build            → Erzeugt beide ZIP-Pakete
-#  make build-legacy     → Erzeugt Legacy-ZIP (Shell 3.38-44)
-#  make build-modern     → Erzeugt Modern-ZIP (Shell 45-48)
-#  make build-legacy-go  → Installiert Legacy Erweiterung 
-#  make build-modern-go  → Installiert Modern Erweiterung
-#  make clean            → Räumt das Verzeichnis auf
+#  make build             → Erzeugt beide Versionen als Archivdatei
+#  make build-legacy      → Erzeugt Legacy-ZIP (Shell 3.38-44)
+#  make build-modern      → Erzeugt Modern-ZIP (Shell 45-48)
+#  make install-legacy    → Installiert Legacy Extension
+#  make install-modern    → Installiert Modern Extension
+#  make clean             → Bereinigt das Ausgangsverzeichnis
 ###############################################################################
 
 UUID     := simple-tiling@domoel
@@ -18,6 +18,8 @@ LEGACY_PREFS := prefs_legacy.js
 MODERN_PREFS := prefs_modern.js
 
 ###############################################################################
+# Helper: copies <file list> <dest>
+###############################################################################
 define copies
 	@for f in $(1) ; do \
 		if [ -e $$f ] ; then \
@@ -27,13 +29,12 @@ define copies
 endef
 
 .PHONY: build build-legacy build-modern \
-        build-legacy-go build-modern-go \
-        clean
+        install-legacy install-modern clean
 
 build: build-legacy build-modern
 
 ###############################################################################
-# Legacy-ZIP (3.38-44)
+# Erzeugt Legacy-ZIP (Shell 3.38-44)
 ###############################################################################
 build-legacy:
 	@echo "==> Building LEGACY zip …"
@@ -50,7 +51,7 @@ build-legacy:
 	@echo "✓  $(UUID)-legacy-v$(VERSION).zip created"
 
 ###############################################################################
-# Modern-ZIP (45-48)
+# Erzeugt Modern-ZIP (Shell 45-48)
 ###############################################################################
 build-modern:
 	@echo "==> Building MODERN zip …"
@@ -67,9 +68,9 @@ build-modern:
 	@echo "✓  $(UUID)-modern-v$(VERSION).zip created"
 
 ###############################################################################
-# “Go”-Targets – Ordner direkt installieren
+# Installiert Legacy Extension bzw. Modern Extension
 ###############################################################################
-build-legacy-go:
+install-legacy:
 	@echo "==> Building & installing LEGACY folder …"
 	@rm -rf build && mkdir -p build/$(UUID)
 	$(call copies,$(COMMON_FILES),build/$(UUID))
@@ -85,7 +86,7 @@ build-legacy-go:
 	@rm -rf build
 	@echo "✓  Installed to $(EXTDIR)/$(UUID)"
 
-build-modern-go:
+install-modern:
 	@echo "==> Building & installing MODERN folder …"
 	@rm -rf build && mkdir -p build/$(UUID)
 	$(call copies,$(COMMON_FILES),build/$(UUID))
@@ -101,6 +102,8 @@ build-modern-go:
 	@rm -rf build
 	@echo "✓  Installed to $(EXTDIR)/$(UUID)"
 
+###############################################################################
+# Bereinigt das Ausgangsverzeichnis
 ###############################################################################
 clean:
 	@rm -rf build $(UUID)-legacy-v$(VERSION).zip $(UUID)-modern-v$(VERSION).zip
