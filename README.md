@@ -60,15 +60,16 @@ The repository includes a Makefile that produces ready‑to‑install ZIP packag
 2. **Create the package that matches your GNOME-Shell version**
    Open the Terminal within the Simple-Tiling directory and run
    ```bash
-   make build
+   make build-legacy-go        # Installs Legacy Extension
+   make build-modern-go        # Installs Modern Extension
    ```
-   **Note:** This will create a ready to go .zip archive of both, the modern and the legacy version of the extension ready to be used. Alternativley you can also run `make build-legacy` or `make build-modern` to only compile one of both versions. You can now unzip your version and put the folder right into your exntensions directory `(~/.local/share/gnome-shell/extensions)`. 
+   **Note:** This command will directly install the extension in the choosen variant (legacy or modern). If you want to manually create and upload the extension to your gnome extensions directory `(~/.local/share/gnome-shell/extensions)` you can just run `make build` to create both versions as .zip or `make build-legacy` or `make build-modern` to create them seperately as .zip. To enable them you need to unzip these archives and put them into your extensions diretory.
 
-3.  **Reload the shell**
+4.  **Reload the shell**
     ```bash
     Press Alt + F2, type  r , hit ↩   (works for X11 and Wayland)
     ```
-4.  **Clean up (optional)**
+5.  **Clean up (optional)**
     ```bash
     make clean        # perform this command in the downloaded folder to remove builds and generated ZIPs
     ```
