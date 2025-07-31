@@ -70,6 +70,7 @@ The repository includes a Makefile that produces ready‑to‑install ZIP packag
     ```
 4.  **Clean up (optional)**
     ```bash
+    # cd back in your downloaded folder (see 1)
     make clean        # removes build/ folder and generated ZIPs
     ```
 
