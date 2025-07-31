@@ -58,6 +58,7 @@ The repository includes a Makefile that produces ready‑to‑install ZIP packag
    ```
 
 2. **Install the package that matches your GNOME-Shell version**
+
    Open the Terminal within the Simple-Tiling directory and run
    ```bash
    make install-legacy        # Installs Legacy Extension
