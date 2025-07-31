@@ -64,7 +64,7 @@ The repository includes a Makefile that produces ready‑to‑install ZIP packag
    make install-legacy        # Installs Legacy Extension
    make install-modern        # Installs Modern Extension
    ```
-   **Note:** This command will directly install the extension in the choosen variant (legacy or modern). If you want to manually create and upload the extension to your gnome extensions directory `(~/.local/share/gnome-shell/extensions)` you can just run `make build` to create both versions as .zip or `make build-legacy` or `make build-modern` to create them seperately as .zip. To enable them you need to unzip these archives and put them into your extensions diretory.
+   **Note:** This command will directly install the extension in the choosen variant (legacy or modern). If you want to manually create and upload the extension to your gnome extensions directory `(~/.local/share/gnome-shell/extensions)` you can just run `make build` to create both versions as .zip or `make build-legacy` or `make build-modern` to create them seperately as .zip. To enable them you need to unzip these archives and put them into your extensions directory.
 
 4.  **Reload the shell**
     ```bash
