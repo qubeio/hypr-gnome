@@ -71,7 +71,7 @@ build-modern:
 # Installiert Legacy Extension bzw. Modern Extension
 ###############################################################################
 install-legacy:
-	@echo "==> Building & installing LEGACY folder …"
+	@echo "==> Building & installing LEGACY Extension …"
 	@rm -rf build && mkdir -p build/$(UUID)
 	$(call copies,$(COMMON_FILES),build/$(UUID))
 	@glib-compile-schemas build/$(UUID)/schemas
@@ -84,10 +84,10 @@ install-legacy:
 	@mkdir -p $(EXTDIR)
 	@mv build/$(UUID) $(EXTDIR)/
 	@rm -rf build
-	@echo "✓  Installed to $(EXTDIR)/$(UUID)"
+	@echo "✓  Extension installed to $(EXTDIR)/$(UUID)"
 
 install-modern:
-	@echo "==> Building & installing MODERN folder …"
+	@echo "==> Building & installing MODERN Extension …"
 	@rm -rf build && mkdir -p build/$(UUID)
 	$(call copies,$(COMMON_FILES),build/$(UUID))
 	@glib-compile-schemas build/$(UUID)/schemas
@@ -100,7 +100,7 @@ install-modern:
 	@mkdir -p $(EXTDIR)
 	@mv build/$(UUID) $(EXTDIR)/
 	@rm -rf build
-	@echo "✓  Installed to $(EXTDIR)/$(UUID)"
+	@echo "✓  Extension installed to $(EXTDIR)/$(UUID)"
 
 ###############################################################################
 # Bereinigt das Ausgangsverzeichnis
