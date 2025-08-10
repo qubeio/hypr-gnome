@@ -1,13 +1,14 @@
 ///////////////////////////////////////////////////////////////
-//   Simple‑Tiling – MODERN MENU (GNOME Shell 45+)           //
-//                © 2025 domoel – MIT                        //
-/////////////////////////////////////////////////////////////
+//     Simple-Tiling – MODERN MENU (GNOME Shell 45+)         //
+//                   © 2025 domoel – MIT                     //
+///////////////////////////////////////////////////////////////
 
 // ── GLOBAL IMPORTS ────────────────────────────────────────
-import { ExtensionPreferences } from 'resource:///org/gnome/shell/extensions/extension.js';
-import Adw   from 'gi://Adw';
-import Gio   from 'gi://Gio';
-import Gtk   from 'gi://Gtk';
+import { ExtensionPreferences } from 'resource:///org/gnome/shell/extensions/prefs.js';
+import Adw from 'gi://Adw';
+import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk';
+import GLib from 'gi://GLib';
 
 export default class SimpleTilingPrefs extends ExtensionPreferences {
     fillPreferencesWindow(window) {
@@ -17,13 +18,13 @@ export default class SimpleTilingPrefs extends ExtensionPreferences {
 
         // ── WINDOW GAPS ────────────────────────────────────────────
         const groupGaps = new Adw.PreferencesGroup({
-            title: 'Window Gaps',
+            title: 'Window Gaps',
             description: 'Adjust spacing between windows and screen edges.'
         });
         page.add(groupGaps);
 
         const rowInnerGap = new Adw.SpinRow({
-            title: 'Inner Gap',
+            title: 'Inner Gap',
             subtitle: 'Space between tiled windows (pixels)',
             adjustment: new Gtk.Adjustment({ lower: 0, upper: 100, step_increment: 1 }),
         });
@@ -31,7 +32,7 @@ export default class SimpleTilingPrefs extends ExtensionPreferences {
         settings.bind('inner-gap', rowInnerGap, 'value', Gio.SettingsBindFlags.DEFAULT);
 
         const rowOuterH = new Adw.SpinRow({
-            title: 'Outer Gap (horizontal)',
+            title: 'Outer Gap (horizontal)',
             subtitle: 'Left / right screen edges (pixels)',
             adjustment: new Gtk.Adjustment({ lower: 0, upper: 100, step_increment: 1 }),
         });
@@ -39,7 +40,7 @@ export default class SimpleTilingPrefs extends ExtensionPreferences {
         settings.bind('outer-gap-horizontal', rowOuterH, 'value', Gio.SettingsBindFlags.DEFAULT);
 
         const rowOuterV = new Adw.SpinRow({
-            title: 'Outer Gap (vertical)',
+            title: 'Outer Gap (vertical)',
             subtitle: 'Top / bottom screen edges (pixels)',
             adjustment: new Gtk.Adjustment({ lower: 0, upper: 100, step_increment: 1 }),
         });
@@ -47,19 +48,20 @@ export default class SimpleTilingPrefs extends ExtensionPreferences {
         settings.bind('outer-gap-vertical', rowOuterV, 'value', Gio.SettingsBindFlags.DEFAULT);
 
         // ── WINDOW BEHAVIOR ────────────────────────────────────────────
-        const groupBehavior = new Adw.PreferencesGroup({ title: 'Window Behavior' });
+        const groupBehavior = new Adw.PreferencesGroup({ title: 'Window Behavior' });
         page.add(groupBehavior);
 
         const rowNewWindow = new Adw.ComboRow({
             title: 'Open new windows as',
             subtitle: 'Whether a new window starts as Master or Stack',
             model: new Gtk.StringList({
-                strings: ['Stack Window (Default)', 'Master Window'],
+                strings: ['Stack Window (Default)', 'Master Window'],
             }),
         });
         groupBehavior.add(rowNewWindow);
 
-        rowNewWindow.selected = settings.get_string('new-window-behavior') === 'master' ? 1 : 0;
+        const currentBehavior = settings.get_string('new-window-behavior');
+        rowNewWindow.selected = currentBehavior === 'master' ? 1 : 0;
 
         rowNewWindow.connect('notify::selected', () => {
             const newVal = rowNewWindow.selected === 1 ? 'master' : 'stack';
@@ -72,11 +74,11 @@ export default class SimpleTilingPrefs extends ExtensionPreferences {
 
         const rowKeys = new Adw.ActionRow({
             title: 'Configure Shortcuts',
-            subtitle: 'Adjust all shortcuts in GNOME Keyboard settings.',
+            subtitle: 'Adjust all shortcuts in GNOME Keyboard settings.',
         });
         groupKeys.add(rowKeys);
 
-        const btnOpenKeyboard = new Gtk.Button({ label: 'Open Keyboard Settings' });
+        const btnOpenKeyboard = new Gtk.Button({ label: 'Open Keyboard Settings' });
         btnOpenKeyboard.connect('clicked', () => {
             const appInfo = Gio.AppInfo.create_from_commandline(
                 'gnome-control-center keyboard', null, Gio.AppInfoCreateFlags.NONE
