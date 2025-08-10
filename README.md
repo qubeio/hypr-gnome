@@ -61,8 +61,9 @@ The repository includes a Makefile that produces ready‑to‑install ZIP packag
 
    Open the Terminal within the Simple-Tiling directory and run
    ```bash
-   make install-legacy        # Installs Legacy Extension
-   make install-modern        # Installs Modern Extension
+   make install-legacy        # Installs Legacy Extension (Gnome-Shell 3.38)
+   make install-interim       # Installs Modern Extension (Gnome-Shell 40 - 44)
+   make install-modern        # Installs Modern Extension (Gnome-Shell 45+)
    ```
    **Note:** This command will directly install the extension in the choosen variant (legacy or modern). If you want to manually create and upload the extension to your gnome extensions directory `(~/.local/share/gnome-shell/extensions)` you can just run `make build` to create both versions as .zip or `make build-legacy` or `make build-modern` to create them seperately as .zip. To enable them you need to unzip these archives and put them into your extensions directory.
 
