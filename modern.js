@@ -105,7 +105,6 @@ class InteractionHandler {
             key,
             this._settings,
             Meta.KeyBindingFlags.NONE,
-            Shell.ActionMode.NORMAL,
             (..._args) => handler(this)
         );
     }
