@@ -675,3 +675,7 @@ var LegacyExtension = class {
         }
     }
 };
+
+function init(metadata) {
+    return new LegacyExtension(metadata);
+}
