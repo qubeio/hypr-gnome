@@ -5,11 +5,11 @@
 
 'use strict';
 
-import { ExtensionPreferences } from 'resource:///org/gnome/shell/extensions/js/extensions/prefs.js';
 import Adw from 'gi://Adw';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import GLib from 'gi://GLib';
+import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/shell/extensions/js/extensions/prefs.js';
 
 export default class SimpleTilingPrefs extends ExtensionPreferences {
     fillPreferencesWindow(window) {
