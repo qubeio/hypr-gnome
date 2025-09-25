@@ -1,0 +1,55 @@
+version: '3'
+
+vars:
+  UUID: hypr-gnome@your-id
+  VERSION: 2.0
+  EXTDIR: '{{.HOME}}/.local/share/gnome-shell/extensions'
+  COMMON_FILES: schemas exceptions.txt locale *.css README.md LICENSE
+
+tasks:
+  # Build the extension as a ZIP archive
+  build:
+    desc: "Build the Hypr-GNOME extension as a ZIP archive"
+    cmds:
+      - echo "==> Building Hypr-GNOME extension..."
+      - rm -rf build && mkdir -p build/{{.UUID}}
+      - |
+        for f in {{.COMMON_FILES}}; do
+          if [ -e "$f" ]; then
+            cp -r "$f" build/{{.UUID}}/
+          fi
+        done
+      - glib-compile-schemas build/{{.UUID}}/schemas
+      - cp extension.js build/{{.UUID}}/extension.js
+      - cp prefs_modern.js build/{{.UUID}}/prefs.js
+      - |
+        sed -e "s/__UUID__/{{.UUID}}/g" \
+            -e "s/__VERSION__/{{.VERSION}}/g" \
+            metadata_modern.json.in > build/{{.UUID}}/metadata.json
+      - cd build && zip -qr ../{{.UUID}}-v{{.VERSION}}.zip .
+      - rm -rf build
+      - echo "✓  {{.UUID}}-v{{.VERSION}}.zip created"
+
+  # Install the extension to the local GNOME Shell extensions directory
+  install:
+    desc: "Install the Hypr-GNOME extension"
+    deps: [build]
+    cmds:
+      - echo "==> Installing Hypr-GNOME Extension..."
+      - rm -rf {{.EXTDIR}}/{{.UUID}}
+      - unzip -q {{.UUID}}-v{{.VERSION}}.zip -d {{.EXTDIR}}
+      - rm -f {{.UUID}}-v{{.VERSION}}.zip
+      - echo "✓  Hypr-GNOME Extension installed to {{.EXTDIR}}/{{.UUID}}. Restart GNOME Shell to apply."
+
+  # Clean up build artifacts and ZIP files
+  clean:
+    desc: "Clean up build directory and ZIP files"
+    cmds:
+      - rm -f {{.UUID}}-*.zip
+      - echo "Build directory and ZIPs removed."
+
+  # Default task - show available tasks
+  default:
+    desc: "Show available tasks"
+    cmds:
+      - task --list

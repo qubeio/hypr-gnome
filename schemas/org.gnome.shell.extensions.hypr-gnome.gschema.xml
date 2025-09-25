@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.gnome.shell.extensions.simple-tiling.domoel" path="/org/gnome/shell/extensions/simple-tiling/domoel/">
+  <schema id="org.gnome.shell.extensions.hypr-gnome" path="/org/gnome/shell/extensions/hypr-gnome/">
     
     <key name="swap-master-window" type="as">
       <default><![CDATA[['<Super>Return']]]></default>

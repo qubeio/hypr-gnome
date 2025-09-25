@@ -1,7 +1,7 @@
 {
   "uuid": "__UUID__",
-  "name": "Simple Tiling",
-  "description": "A Simple Tiling Extension for Gnome Shell.",
+  "name": "Hypr-GNOME",
+  "description": "A Hyprland-inspired tiling window manager for GNOME Shell.",
   "version": __VERSION__,
   "shell-version": [
     "45",
@@ -9,8 +9,8 @@
     "47",
     "48"
   ],
-  "settings-schema": "org.gnome.shell.extensions.simple-tiling.domoel",
+  "settings-schema": "org.gnome.shell.extensions.hypr-gnome",
   "preferences_ui": "prefs.js",
-  "url": "https://github.com/Domoel/Simple-Tiling",
+  "url": "https://github.com/andreas/hypr-gnome",
   "gettext-domain": "__UUID__"
 }
