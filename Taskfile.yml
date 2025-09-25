@@ -1,7 +1,7 @@
 version: '3'
 
 vars:
-  UUID: hypr-gnome@your-id
+  UUID: hypr-gnome@qubeio.com
   VERSION: 2.0
   EXTDIR: '{{.HOME}}/.local/share/gnome-shell/extensions'
   COMMON_FILES: schemas exceptions.txt locale *.css README.md LICENSE

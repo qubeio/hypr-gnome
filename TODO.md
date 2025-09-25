@@ -17,8 +17,9 @@ Note: Keep files under 500 lines, use clear modules, and follow modern GNOME She
 - [ ] Port existing settings and add PRD keys (scoped to master‑stack only):
   - [ ] `default-layout` (fixed to 'master-stack'), remove layout cycling for now
   - [ ] `inner-gap`, `outer-gap-horizontal`, `outer-gap-vertical`
-  - [ ] Keybinding arrays (focus/move/resize/layout/workspaces/splitting/app mgmt)
+  - [ ] Keybinding arrays (focus/move/resize/layout/workspaces/splitting/app mgmt) - **use Alt instead of Super**
   - [ ] `enable-animations`, `animation-duration`, `multi-monitor-support`
+- [ ] **Update existing keybindings**: Change current Super-based shortcuts to Alt-based in schema
 - [ ] Compile schemas in build pipeline (`glib-compile-schemas`)
 - [ ] Migration: read legacy simple‑tiling keys if present and map into new keys (best‑effort)
 
@@ -34,10 +35,12 @@ Note: Keep files under 500 lines, use clear modules, and follow modern GNOME She
 - [ ] Resize (dir + master width + master count)
 - [ ] Split/unsplit (horizontal/vertical/remove one/remove all)
 
-### 4) Keybindings (Hyprland‑inspired)
+### 4) Keybindings (Hyprland‑inspired, Alt-based)
 - [ ] `KeybindingManager` registers shortcuts relevant to master‑stack only
+- [ ] Use Alt as primary modifier (instead of Super) for all keybindings
 - [ ] Bind to actions in `TilingManager`/`WorkspaceManager`
 - [ ] Handle conflicts, enable customization via prefs
+- [ ] Update existing keybindings from Super to Alt in schema and code
 
 ### 5) Workspaces & Multi‑Monitor
 - [ ] `WorkspaceManager` with dynamic workspaces (create/destroy on demand)

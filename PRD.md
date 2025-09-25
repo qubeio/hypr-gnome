@@ -48,69 +48,69 @@ This document outlines the requirements for transforming the existing Simple Til
 
 #### 3.2.1 Window Focus
 ```
-Super + h/j/k/l          # Focus left/down/up/right
-Super + Left/Down/Up/Right # Focus in direction
-Super + Tab              # Focus next window
-Super + Shift + Tab      # Focus previous window
-Super + m                # Focus master window
-Super + c                # Focus center window
+Alt + h/j/k/l            # Focus left/down/up/right
+Alt + Left/Down/Up/Right # Focus in direction
+Alt + Tab                # Focus next window
+Alt + Shift + Tab        # Focus previous window
+Alt + m                  # Focus master window
+Alt + c                  # Focus center window
 ```
 
 #### 3.2.2 Window Movement
 ```
-Super + Shift + h/j/k/l  # Move window left/down/up/right
-Super + Shift + Left/Down/Up/Right # Move window in direction
-Super + Shift + m        # Move window to master
-Super + Shift + c        # Move window to center
+Alt + Shift + h/j/k/l    # Move window left/down/up/right
+Alt + Shift + Left/Down/Up/Right # Move window in direction
+Alt + Shift + m          # Move window to master
+Alt + Shift + c          # Move window to center
 ```
 
 #### 3.2.3 Window Resizing
 ```
-Super + Ctrl + h/j/k/l   # Resize window left/down/up/right
-Super + Ctrl + Left/Down/Up/Right # Resize in direction
-Super + =                # Increase master width
-Super + -                # Decrease master width
-Super + Shift + =        # Increase master count
-Super + Shift + -        # Decrease master count
+Alt + Ctrl + h/j/k/l     # Resize window left/down/up/right
+Alt + Ctrl + Left/Down/Up/Right # Resize in direction
+Alt + =                  # Increase master width
+Alt + -                  # Decrease master width
+Alt + Shift + =          # Increase master count
+Alt + Shift + -          # Decrease master count
 ```
 
 #### 3.2.4 Layout Management
 ```
-Super + Space            # Next layout
-Super + Shift + Space    # Previous layout
-Super + t                # Toggle tiling/floating
-Super + Shift + t        # Toggle pseudo-tiling
-Super + f                # Toggle fullscreen
-Super + Shift + f        # Toggle fake fullscreen
+Alt + Space              # Next layout
+Alt + Shift + Space      # Previous layout
+Alt + t                  # Toggle tiling/floating
+Alt + Shift + t          # Toggle pseudo-tiling
+Alt + f                  # Toggle fullscreen
+Alt + Shift + f          # Toggle fake fullscreen
 ```
 
 #### 3.2.5 Workspace Management
 ```
-Super + 1-9              # Switch to workspace
-Super + Shift + 1-9      # Move window to workspace
-Super + Ctrl + 1-9       # Move window to workspace and follow
-Super + Tab              # Next workspace
-Super + Shift + Tab      # Previous workspace
-Super + g                # Go to workspace
-Super + Shift + g        # Move window to workspace
+Alt + 1-9                # Switch to workspace
+Alt + Shift + 1-9        # Move window to workspace
+Alt + Ctrl + 1-9         # Move window to workspace and follow
+Alt + Tab                # Next workspace
+Alt + Shift + Tab        # Previous workspace
+Alt + g                  # Go to workspace
+Alt + Shift + g          # Move window to workspace
 ```
 
 #### 3.2.6 Window Splitting
 ```
-Super + Enter            # Split horizontally
-Super + Shift + Enter    # Split vertically
-Super + Backspace        # Remove split
-Super + Shift + Backspace # Remove all splits
+Alt + Enter              # Split horizontally
+Alt + Shift + Enter      # Split vertically
+Alt + Backspace          # Remove split
+Alt + Shift + Backspace  # Remove all splits
 ```
 
 #### 3.2.7 Application Management
 ```
-Super + d                # Application launcher
-Super + Shift + d        # Application launcher (alternative)
-Super + q                # Close window
-Super + Shift + q        # Kill window
-Super + r                # Reload configuration
-Super + Shift + r        # Restart extension
+Alt + d                  # Application launcher
+Alt + Shift + d          # Application launcher (alternative)
+Alt + q                  # Close window
+Alt + Shift + q          # Kill window
+Alt + r                  # Reload configuration
+Alt + Shift + r          # Restart extension
 ```
 
 ### 3.3 Advanced Features
@@ -216,7 +216,7 @@ hypr-gnome/
   
   <!-- Keybindings -->
   <key name="focus-left" type="as">
-    <default>['<Super>h', '<Super>Left']</default>
+    <default>['<Alt>h', '<Alt>Left']</default>
   </key>
   <!-- ... more keybindings ... -->
   
