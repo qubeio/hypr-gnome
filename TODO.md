@@ -7,7 +7,7 @@ Note: Keep files under 500 lines, use clear modules, and follow modern GNOME She
   - Target schema id: `org.gnome.shell.extensions.hypr-gnome`
   - Final UUID: `hypr-gnome@qubeio.com`
 - [x] Update `Makefile` `UUID` and packaging names to the new UUID
-- [ ] Create module directories: `layouts/`, `keybindings/`, `rules/`, `animations/`, `monitors/`, `docs/`
+- [x] Create module directories: `layouts/`, `keybindings/`, `rules/`, `animations/`, `monitors/`, `docs/`
 - [ ] Create core managers (files only, minimal scaffolding): `TilingManager`, `KeybindingManager`, `WorkspaceManager`, `WindowRules`, `AnimationEngine`
 - [ ] Use single entrypoint (`extension.js`) with modern GNOME Shell 45+ implementation
 - [ ] Introduce `Taskfile.yml` (GoTask) for build/test/lint/install flows (keep `Makefile` for GNOME users)
