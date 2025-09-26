@@ -2,42 +2,62 @@
 <schemalist>
   <schema id="org.gnome.shell.extensions.hypr-gnome" path="/org/gnome/shell/extensions/hypr-gnome/">
     
-    <key name="swap-master-window" type="as">
-      <default><![CDATA[['<Super>Return']]]></default>
+    <key name="swap-master" type="as">
+      <default><![CDATA[['<Alt><Shift>m', '<Alt><Shift>Return']]]></default>
       <summary>Swap current window with master.</summary>
     </key>
-    <key name="swap-up-window" type="as">
-      <default><![CDATA[['<Super>Up']]]></default>
+    <key name="swap-up" type="as">
+      <default><![CDATA[['<Alt><Shift>k', '<Alt><Shift>Up']]]></default>
       <summary>Swap current window with window above.</summary>
     </key>
-    <key name="swap-down-window" type="as">
-      <default><![CDATA[['<Super>Down']]]></default>
+    <key name="swap-down" type="as">
+      <default><![CDATA[['<Alt><Shift>j', '<Alt><Shift>Down']]]></default>
       <summary>Swap current window with window below.</summary>
     </key>
-    <key name="swap-left-window" type="as">
-      <default><![CDATA[['<Super>Left']]]></default>
+    <key name="swap-left" type="as">
+      <default><![CDATA[['<Alt><Shift>h', '<Alt><Shift>Left']]]></default>
       <summary>Swap current window with window to the left.</summary>
     </key>
-    <key name="swap-right-window" type="as">
-      <default><![CDATA[['<Super>Right']]]></default>
+    <key name="swap-right" type="as">
+      <default><![CDATA[['<Alt><Shift>l', '<Alt><Shift>Right']]]></default>
       <summary>Swap current window with window to the right.</summary>
     </key>
     
     <key name="focus-up" type="as">
-      <default><![CDATA[['<Alt>Up']]]></default>
+      <default><![CDATA[['<Alt>k', '<Alt>Up']]]></default>
       <summary>Focus window above.</summary>
     </key>
     <key name="focus-down" type="as">
-      <default><![CDATA[['<Alt>Down']]]></default>
+      <default><![CDATA[['<Alt>j', '<Alt>Down']]]></default>
       <summary>Focus window below.</summary>
     </key>
     <key name="focus-left" type="as">
-      <default><![CDATA[['<Alt>Left']]]></default>
+      <default><![CDATA[['<Alt>h', '<Alt>Left']]]></default>
       <summary>Focus window to the left.</summary>
     </key>
     <key name="focus-right" type="as">
-      <default><![CDATA[['<Alt>Right']]]></default>
+      <default><![CDATA[['<Alt>l', '<Alt>Right']]]></default>
       <summary>Focus window to the right.</summary>
+    </key>
+    <key name="workspace-prev" type="as">
+      <default><![CDATA[['<Alt><Ctrl>Left']]]></default>
+      <summary>Switch to previous workspace.</summary>
+    </key>
+    <key name="workspace-next" type="as">
+      <default><![CDATA[['<Alt><Ctrl>Right']]]></default>
+      <summary>Switch to next workspace.</summary>
+    </key>
+    <key name="move-to-workspace-prev" type="as">
+      <default><![CDATA[['<Alt><Shift><Ctrl>Left']]]></default>
+      <summary>Move focused window to previous workspace.</summary>
+    </key>
+    <key name="move-to-workspace-next" type="as">
+      <default><![CDATA[['<Alt><Shift><Ctrl>Right']]]></default>
+      <summary>Move focused window to next workspace.</summary>
+    </key>
+    <key name="test-keybinding" type="as">
+      <default><![CDATA[['<Super>t']]]></default>
+      <summary>Test keybinding to verify system works.</summary>
     </key>
 
     <key name="inner-gap" type="i">

@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////
-//      Simple‑Tiling – MODERN (GNOME Shell 45+)          //
+//           Hypr‑GNOME – MODERN (GNOME Shell 45+)        //
 //               © 2025 qubeio – MIT                       //
 /////////////////////////////////////////////////////////////
 
@@ -13,6 +13,10 @@ import Gio             from 'gi://Gio';
 import GLib            from 'gi://GLib';
 import Clutter         from 'gi://Clutter';
 
+// ── CORE MANAGERS ────────────────────────────────────────
+// TODO: Import managers when they're properly implemented
+// For now, we'll use the legacy Tiler class
+
 // ── CONST ────────────────────────────────────────────
 const WM_SCHEMA          = 'org.gnome.desktop.wm.keybindings';
 
@@ -20,15 +24,49 @@ const TILING_DELAY_MS    = 20;   // Change Tiling Window Delay
 const CENTERING_DELAY_MS = 5;    // Change Centered Window Delay
 
 const KEYBINDINGS = {
-    'swap-master-window': (self) => self._swapWithMaster(),
-    'swap-left-window':   (self) => self._swapInDirection('left'),
-    'swap-right-window':  (self) => self._swapInDirection('right'),
-    'swap-up-window':     (self) => self._swapInDirection('up'),
-    'swap-down-window':   (self) => self._swapInDirection('down'),
+    'swap-master': (self) => self._swapWithMaster(),
+    'swap-left':   (self) => self._swapInDirection('left'),
+    'swap-right':  (self) => self._swapInDirection('right'),
+    'swap-up':     (self) => self._swapInDirection('up'),
+    'swap-down':   (self) => self._swapInDirection('down'),
     'focus-left':         (self) => self._focusInDirection('left'),
     'focus-right':        (self) => self._focusInDirection('right'),
     'focus-up':           (self) => self._focusInDirection('up'),
     'focus-down':         (self) => self._focusInDirection('down'),
+    'workspace-prev':     (self) => {
+      const wm = global.workspace_manager;
+      const index = wm.get_active_workspace_index();
+      if (index > 0) {
+        wm.activate_workspace(index - 1, global.get_current_time());
+      }
+    },
+    'workspace-next':     (self) => {
+      const wm = global.workspace_manager;
+      const index = wm.get_active_workspace_index();
+      wm.activate_workspace(index + 1, global.get_current_time());
+    },
+    'move-to-workspace-prev': (self) => {
+      const wm = global.workspace_manager;
+      const index = wm.get_active_workspace_index();
+      const window = global.display.focus_window;
+      if (window) {
+        const targetIndex = Math.max(0, index - 1);
+        const targetWs = wm.get_workspace_by_index(targetIndex);
+        window.move_to_workspace(targetWs);
+      }
+    },
+    'move-to-workspace-next': (self) => {
+      const wm = global.workspace_manager;
+      const index = wm.get_active_workspace_index();
+      const window = global.display.focus_window;
+      if (window) {
+        const targetWs = wm.get_workspace_by_index(index + 1);
+        window.move_to_workspace(targetWs);
+      }
+    },
+    'test-keybinding': (self) => {
+      log(`[Hypr-GNOME] TEST KEYBINDING TRIGGERED! This proves the system works.`);
+    }
 };
 
 // ── HELPER‑FUNCTION ────────────────────────────────────────
@@ -65,15 +103,21 @@ class InteractionHandler {
     }
 
     enable() {
+        log(`[Hypr-GNOME] Extension enabling...`);
         this._prepareWmShortcuts();
 
         if (this._wmKeysToDisable.length)
             this._wmKeysToDisable.forEach(k =>
                 this._wmSettings.set_value(k, new GLib.Variant('as', [])));
 
+        // Debug: Check GSettings values
+        this._debugSettings();
+
         this._bindAllShortcuts();
         this._settingsChangedId =
             this._settings.connect('changed', () => this._onSettingsChanged());
+        
+        log(`[Hypr-GNOME] Extension enabled successfully`);
 
         this._grabOpIds.push(
             global.display.connect('grab-op-begin',
@@ -101,16 +145,42 @@ class InteractionHandler {
     }
 
     _bind(key, handler) {
-        global.display.add_keybinding(
-            key,
-            this._settings,
-            Meta.KeyBindingFlags.NONE,
-            (..._args) => handler(this)
-        );
+        log(`[Hypr-GNOME] Registering keybinding: ${key}`);
+        try {
+            Main.wm.addKeybinding(
+                key,
+                this._settings,
+                Meta.KeyBindingFlags.NONE,
+                Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
+                () => {
+                    log(`[Hypr-GNOME] Keybinding triggered: ${key}`);
+                    handler(this);
+                }
+            );
+            log(`[Hypr-GNOME] Successfully registered keybinding: ${key}`);
+        } catch (e) {
+            log(`[Hypr-GNOME] Error registering keybinding ${key}: ${e.message}`);
+        }
     }
 
-    _bindAllShortcuts()  { for (const [k,h] of Object.entries(KEYBINDINGS)) this._bind(k, h); }
-    _unbindAllShortcuts(){ for (const k in KEYBINDINGS) global.display.remove_keybinding(k); }
+    _bindAllShortcuts()  { 
+        log(`[Hypr-GNOME] Binding all shortcuts. Available keybindings: ${Object.keys(KEYBINDINGS).join(', ')}`);
+        for (const [k,h] of Object.entries(KEYBINDINGS)) this._bind(k, h); 
+    }
+    _unbindAllShortcuts(){ for (const k in KEYBINDINGS) Main.wm.removeKeybinding(k); }
+
+    _debugSettings() {
+        log(`[Hypr-GNOME] Debug: Checking GSettings values`);
+        const focusKeys = ['focus-left', 'focus-right', 'focus-up', 'focus-down'];
+        focusKeys.forEach(key => {
+            try {
+                const value = this._settings.get_value(key);
+                log(`[Hypr-GNOME] ${key}: ${value.deep_unpack()}`);
+            } catch (e) {
+                log(`[Hypr-GNOME] Error reading ${key}: ${e.message}`);
+            }
+        });
+    }
 
     _onSettingsChanged() {
         this._unbindAllShortcuts();
@@ -137,6 +207,16 @@ class InteractionHandler {
             add('maximize');   add('unmaximize');
         }
 
+        // Disable conflicting workspace keybindings that use Alt+arrows
+        add('switch-to-workspace-left');
+        add('switch-to-workspace-right');
+        add('switch-to-workspace-up');
+        add('switch-to-workspace-down');
+        add('move-to-workspace-left');
+        add('move-to-workspace-right');
+        add('move-to-workspace-up');
+        add('move-to-workspace-down');
+
         if (keys.length) {
             this._wmKeysToDisable = keys;
             keys.forEach(k => this._savedWmShortcuts[k] =
@@ -145,10 +225,21 @@ class InteractionHandler {
     }
 
     _focusInDirection(direction) {
+        log(`[Hypr-GNOME] _focusInDirection called with direction: ${direction}`);
         const src = global.display.get_focus_window();
-        if (!src || !this.tiler.windows.includes(src)) return;
+        log(`[Hypr-GNOME] Focused window: ${src ? src.get_title() : 'none'}`);
+        if (!src || !this.tiler.windows.includes(src)) {
+            log(`[Hypr-GNOME] No valid source window or not in tiler windows`);
+            return;
+        }
         const tgt = this._findTargetInDirection(src, direction);
-        if (tgt) tgt.activate(global.get_current_time());
+        log(`[Hypr-GNOME] Target window: ${tgt ? tgt.get_title() : 'none'}`);
+        if (tgt) {
+            log(`[Hypr-GNOME] Activating target window`);
+            tgt.activate(global.get_current_time());
+        } else {
+            log(`[Hypr-GNOME] No target window found in direction: ${direction}`);
+        }
     }
 
     _swapWithMaster() {
@@ -591,7 +682,50 @@ class Tiler {
 }
 
 // ── EXTENSION‑WRAPPER ───────────────────────────────────
-export default class ModernExtension extends Extension {
-    enable()  { this.tiler = new Tiler(this); this.tiler.enable(); }
-    disable() { this.tiler?.disable(); this.tiler = null; }
+export default class HyprGnomeExtension extends Extension {
+    constructor(metadata) {
+        super(metadata);
+        this._managers = new Map();
+        this._settings = null;
+    }
+    
+    enable() {
+        // Initialize GSettings
+        this._settings = this.getSettings();
+        
+        // Initialize core managers (TODO: Enable when managers are properly implemented)
+        // this._managers.set('tiling', new TilingManager());
+        // this._managers.set('keybindings', new KeybindingManager());
+        // this._managers.set('workspaces', new WorkspaceManager());
+        // this._managers.set('rules', new WindowRules());
+        // this._managers.set('animations', new AnimationEngine());
+        
+        // TODO: Initialize manager dependencies and connections
+        // TODO: Register keybindings and event handlers
+        // TODO: Apply initial window rules and layout
+        
+        // Legacy compatibility - keep existing Tiler for now
+        this.tiler = new Tiler(this);
+        this.tiler.enable();
+    }
+    
+    disable() {
+        // Cleanup managers in reverse order
+        this._managers.forEach(manager => {
+            if (manager && typeof manager.destroy === 'function') {
+                manager.destroy();
+            }
+        });
+        this._managers.clear();
+        
+        // Legacy cleanup
+        this.tiler?.disable();
+        this.tiler = null;
+        
+        this._settings = null;
+    }
+    
+    getManager(name) {
+        return this._managers.get(name);
+    }
 }
