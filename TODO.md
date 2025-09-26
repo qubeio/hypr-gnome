@@ -143,3 +143,22 @@ Refer to docs/workspaces.md for implementation instructions
       The "peek" window should update so you know which one is coming next.
 - [ ] Add layout switching keybindings
 - [ ] Test all layouts with different window counts
+
+### Next – Implement Alt+Q close window keybinding
+
+#### Add macOS-style close window functionality
+- [ ] Add Alt+Q keybinding to schema
+  - [ ] Define `hypr-close-window` keybinding in GSettings schema
+  - [ ] Set default key combination to Alt+Q
+  - [ ] Recompile schemas via Taskfile
+- [ ] Implement close window handler in extension.js
+  - [ ] Add close window handler to InteractionHandler
+  - [ ] Use `window.delete()` to close the focused window
+  - [ ] Handle edge cases (no focused window, system windows)
+- [ ] Test close window functionality
+  - [ ] Test with different application types
+  - [ ] Verify it works with tiled and floating windows
+  - [ ] Ensure no conflicts with application shortcuts
+- [ ] Update documentation
+  - [ ] Add Alt+Q to `docs/keybindings.md`
+  - [ ] Document macOS-like behavior in README
