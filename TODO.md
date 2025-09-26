@@ -43,3 +43,45 @@ Refer to docs/workspaces.md for implementation instructions
   - [x] Support both numbered (Alt+1-6) and letter (Alt+T/B/S/A/M) workspaces.
 - [ ] Optional: display names in any UI/OSD we provide.
 - [x] Document behavior, caveats (Wayland vs Xorg), and conflicts in README.
+
+### Next – Remove workspace navigation keybindings and implement specific named workspace switching
+
+#### Remove workspace navigation functionality
+- [x] Remove workspace navigation keybindings from schema
+  - [x] Remove `workspace-prev` keybinding (Alt+Ctrl+Left)
+  - [x] Remove `workspace-next` keybinding (Alt+Ctrl+Right) 
+  - [x] Remove `move-to-workspace-prev` keybinding (Alt+Shift+Ctrl+Left)
+  - [x] Remove `move-to-workspace-next` keybinding (Alt+Shift+Ctrl+Right)
+- [x] Remove workspace navigation handlers from extension.js
+  - [x] Remove `workspace-prev` handler from InteractionHandler
+  - [x] Remove `workspace-next` handler from InteractionHandler
+  - [x] Remove `move-to-workspace-prev` handler from InteractionHandler
+  - [x] Remove `move-to-workspace-next` handler from InteractionHandler
+- [x] Recompile schemas and test removal
+
+#### Implement move window to specific workspaces
+- [x] Add move-to-workspace keybindings to schema
+  - [x] Add `hypr-move-to-workspace-1` through `hypr-move-to-workspace-6` keys (Alt+Shift+1-6)
+  - [x] Add `hypr-move-to-workspace-t`, `hypr-move-to-workspace-b`, `hypr-move-to-workspace-s`, `hypr-move-to-workspace-a`, `hypr-move-to-workspace-m`, `hypr-move-to-workspace-d` keys (Alt+Shift+T/B/S/A/M/D)
+- [x] Implement move-to-workspace handlers in extension.js
+  - [x] Wire up numbered workspace move handlers (Alt+Shift+1-6)
+  - [x] Wire up letter workspace move handlers (Alt+Shift+T/B/S/A/M/D)
+  - [x] Use `window.change_workspace_by_index()` to move focused window
+  - [x] Map letter keys to workspace indices (T=6, B=7, S=8, A=9, M=10, D=11)
+- [x] Test window movement to all workspaces
+- [x] Update documentation
+  - [x] Update `docs/keybindings.md` with new workspace switching behavior
+  - [x] Remove references to workspace navigation keybindings
+  - [x] Document specific workspace switching functionality
+
+### Next – Standardize keybinding naming convention
+
+#### Apply hypr- prefix to all keybindings
+- [x] Add hypr- prefix to all keybinding names in schema to avoid Mutter collisions
+  - [x] Rename all focus keys: `focus-*` → `hypr-focus-*`
+  - [x] Rename all swap keys: `swap-*` → `hypr-swap-*`
+  - [x] Rename all workspace keys: `workspace-*` → `hypr-workspace-*`
+  - [x] Rename all move-to-workspace keys: `hypr-move-to-workspace-*` (already prefixed)
+- [x] Update extension.js KEYBINDINGS map to use hypr- prefix
+- [x] Test all keybindings with new naming convention
+- [x] Update documentation to reflect new naming convention

@@ -2,112 +2,150 @@
 <schemalist>
   <schema id="org.gnome.shell.extensions.hypr-gnome" path="/org/gnome/shell/extensions/hypr-gnome/">
     
-    <key name="swap-master" type="as">
-      <default><![CDATA[['<Alt><Shift>m', '<Alt><Shift>Return']]]></default>
+    <key name="hypr-swap-master" type="as">
+      <default><![CDATA[['<Alt><Shift>Return']]]></default>
       <summary>Swap current window with master.</summary>
     </key>
-    <key name="swap-up" type="as">
+    <key name="hypr-swap-up" type="as">
       <default><![CDATA[['<Alt><Shift>k', '<Alt><Shift>Up']]]></default>
       <summary>Swap current window with window above.</summary>
     </key>
-    <key name="swap-down" type="as">
+    <key name="hypr-swap-down" type="as">
       <default><![CDATA[['<Alt><Shift>j', '<Alt><Shift>Down']]]></default>
       <summary>Swap current window with window below.</summary>
     </key>
-    <key name="swap-left" type="as">
+    <key name="hypr-swap-left" type="as">
       <default><![CDATA[['<Alt><Shift>h', '<Alt><Shift>Left']]]></default>
       <summary>Swap current window with window to the left.</summary>
     </key>
-    <key name="swap-right" type="as">
+    <key name="hypr-swap-right" type="as">
       <default><![CDATA[['<Alt><Shift>l', '<Alt><Shift>Right']]]></default>
       <summary>Swap current window with window to the right.</summary>
     </key>
     
-    <key name="focus-up" type="as">
+    <key name="hypr-focus-up" type="as">
       <default><![CDATA[['<Alt>k', '<Alt>Up']]]></default>
       <summary>Focus window above.</summary>
     </key>
-    <key name="focus-down" type="as">
+    <key name="hypr-focus-down" type="as">
       <default><![CDATA[['<Alt>j', '<Alt>Down']]]></default>
       <summary>Focus window below.</summary>
     </key>
-    <key name="focus-left" type="as">
+    <key name="hypr-focus-left" type="as">
       <default><![CDATA[['<Alt>h', '<Alt>Left']]]></default>
       <summary>Focus window to the left.</summary>
     </key>
-    <key name="focus-right" type="as">
+    <key name="hypr-focus-right" type="as">
       <default><![CDATA[['<Alt>l', '<Alt>Right']]]></default>
       <summary>Focus window to the right.</summary>
     </key>
-    <key name="workspace-prev" type="as">
-      <default><![CDATA[['<Alt><Ctrl>Left']]]></default>
-      <summary>Switch to previous workspace.</summary>
-    </key>
-    <key name="workspace-next" type="as">
-      <default><![CDATA[['<Alt><Ctrl>Right']]]></default>
-      <summary>Switch to next workspace.</summary>
-    </key>
-    <key name="move-to-workspace-prev" type="as">
-      <default><![CDATA[['<Alt><Shift><Ctrl>Left']]]></default>
-      <summary>Move focused window to previous workspace.</summary>
-    </key>
-    <key name="move-to-workspace-next" type="as">
-      <default><![CDATA[['<Alt><Shift><Ctrl>Right']]]></default>
-      <summary>Move focused window to next workspace.</summary>
-    </key>
-    <key name="test-keybinding" type="as">
+    <key name="hypr-test-keybinding" type="as">
       <default><![CDATA[['<Super>t']]]></default>
       <summary>Test keybinding to verify system works.</summary>
     </key>
 
     <!-- Workspace switching keybindings -->
-    <key name="workspace-1" type="as">
+    <key name="hypr-workspace-1" type="as">
       <default><![CDATA[['<Alt>1']]]></default>
       <summary>Switch to workspace 1.</summary>
     </key>
-    <key name="workspace-2" type="as">
+    <key name="hypr-workspace-2" type="as">
       <default><![CDATA[['<Alt>2']]]></default>
       <summary>Switch to workspace 2.</summary>
     </key>
-    <key name="workspace-3" type="as">
+    <key name="hypr-workspace-3" type="as">
       <default><![CDATA[['<Alt>3']]]></default>
       <summary>Switch to workspace 3.</summary>
     </key>
-    <key name="workspace-4" type="as">
+    <key name="hypr-workspace-4" type="as">
       <default><![CDATA[['<Alt>4']]]></default>
       <summary>Switch to workspace 4.</summary>
     </key>
-    <key name="workspace-5" type="as">
+    <key name="hypr-workspace-5" type="as">
       <default><![CDATA[['<Alt>5']]]></default>
       <summary>Switch to workspace 5.</summary>
     </key>
-    <key name="workspace-6" type="as">
+    <key name="hypr-workspace-6" type="as">
       <default><![CDATA[['<Alt>6']]]></default>
       <summary>Switch to workspace 6.</summary>
     </key>
-    <key name="workspace-t" type="as">
+    <key name="hypr-workspace-t" type="as">
       <default><![CDATA[['<Alt>t']]]></default>
       <summary>Switch to workspace T.</summary>
     </key>
-    <key name="workspace-b" type="as">
+    <key name="hypr-workspace-b" type="as">
       <default><![CDATA[['<Alt>b']]]></default>
       <summary>Switch to workspace B.</summary>
     </key>
-    <key name="workspace-s" type="as">
+    <key name="hypr-workspace-s" type="as">
       <default><![CDATA[['<Alt>s']]]></default>
       <summary>Switch to workspace S.</summary>
     </key>
-    <key name="workspace-a" type="as">
+    <key name="hypr-workspace-a" type="as">
       <default><![CDATA[['<Alt>a']]]></default>
       <summary>Switch to workspace A.</summary>
     </key>
-    <key name="workspace-m" type="as">
+    <key name="hypr-workspace-m" type="as">
       <default><![CDATA[['<Alt>m']]]></default>
       <summary>Switch to workspace M.</summary>
     </key>
-    <key name="workspace-d" type="as">
+    <key name="hypr-workspace-d" type="as">
       <default><![CDATA[['<Alt>d']]]></default>
       <summary>Switch to workspace D.</summary>
+    </key>
+
+    <!-- Move window to workspace keybindings -->
+    <key name="hypr-move-to-workspace-1" type="as">
+      <default><![CDATA[['<Alt><Shift>1']]]></default>
+      <summary>Move focused window to workspace 1.</summary>
+    </key>
+    <key name="hypr-test-move-workspace" type="as">
+      <default><![CDATA[['<Alt><Shift>y']]]></default>
+      <summary>Test move window to workspace 1.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-2" type="as">
+      <default><![CDATA[['<Alt><Shift>2']]]></default>
+      <summary>Move focused window to workspace 2.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-3" type="as">
+      <default><![CDATA[['<Alt><Shift>3']]]></default>
+      <summary>Move focused window to workspace 3.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-4" type="as">
+      <default><![CDATA[['<Alt><Shift>4']]]></default>
+      <summary>Move focused window to workspace 4.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-5" type="as">
+      <default><![CDATA[['<Alt><Shift>5']]]></default>
+      <summary>Move focused window to workspace 5.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-6" type="as">
+      <default><![CDATA[['<Alt><Shift>6']]]></default>
+      <summary>Move focused window to workspace 6.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-t" type="as">
+      <default><![CDATA[['<Alt><Shift>t']]]></default>
+      <summary>Move focused window to workspace T.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-b" type="as">
+      <default><![CDATA[['<Alt><Shift>b']]]></default>
+      <summary>Move focused window to workspace B.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-s" type="as">
+      <default><![CDATA[['<Alt><Shift>s']]]></default>
+      <summary>Move focused window to workspace S.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-a" type="as">
+      <default><![CDATA[['<Alt><Shift>a']]]></default>
+      <summary>Move focused window to workspace A.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-m" type="as">
+      <default><![CDATA[['<Alt><Shift>m']]]></default>
+      <summary>Move focused window to workspace M.</summary>
+    </key>
+    <key name="hypr-move-to-workspace-d" type="as">
+      <default><![CDATA[['<Alt><Shift>d']]]></default>
+      <summary>Move focused window to workspace D.</summary>
     </key>
 
     <key name="inner-gap" type="i">

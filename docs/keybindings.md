@@ -70,6 +70,21 @@ Main.wm.removeKeybinding('focus-right');
 - **Workspace navigation**: Alt+Ctrl+Left/Right for previous/next workspace
 - **Window movement**: Alt+Shift+Ctrl+Left/Right to move window to previous/next workspace
 
+### Troubleshooting: Alt+Shift+number and move-to-workspace
+- **Symptom**: Some combos (e.g., Alt+Shift+1, Alt+Ctrl+R) did not trigger our handlers.
+- **Root cause**: We originally used key names that collide with Mutter’s built‑in bindings (e.g., `move-to-workspace-1`). GNOME warned: “Trying to re-add keybinding \"move-to-workspace-1\"”, so grabs/dispatch were unreliable.
+- **Fix**:
+  - Use unique schema key names prefixed with `hypr-`, e.g., `hypr-move-to-workspace-1`, `hypr-move-to-workspace-t`.
+  - For shifted digits, bind to the digit form (e.g., `'<Alt><Shift>1'`) — do not use symbol names like `exclam`.
+  - Continue disabling conflicting WM arrow bindings under `org.gnome.desktop.wm.keybindings`.
+- **Verification checklist**:
+  - Build/install schemas, restart shell, then reset defaults:
+    - `task install`
+    - Alt+F2 → `r` → Enter (Xorg)
+    - `gsettings reset-recursively org.gnome.shell.extensions.hypr-gnome`
+  - Confirm: `journalctl --user -f | grep -i hypr-gnome` shows “Successfully registered …” and keypresses log as “Keybinding triggered: …”.
+- **FYI**: Alt+Shift is not reserved for layout switching unless `org.gnome.desktop.input-sources xkb-options` includes `grp:alt_shift_toggle`.
+
 ### References
 - Mutter keybinding flags (`Meta.KeyBindingFlags`):
   [meta-keybinding.h](https://gitlab.gnome.org/GNOME/mutter/-/blob/main/src/meta/meta-keybinding.h)

@@ -24,68 +24,45 @@ const TILING_DELAY_MS    = 20;   // Change Tiling Window Delay
 const CENTERING_DELAY_MS = 5;    // Change Centered Window Delay
 
 const KEYBINDINGS = {
-    'swap-master': (self) => self._swapWithMaster(),
-    'swap-left':   (self) => self._swapInDirection('left'),
-    'swap-right':  (self) => self._swapInDirection('right'),
-    'swap-up':     (self) => self._swapInDirection('up'),
-    'swap-down':   (self) => self._swapInDirection('down'),
-    'focus-left':         (self) => self._focusInDirection('left'),
-    'focus-right':        (self) => self._focusInDirection('right'),
-    'focus-up':           (self) => self._focusInDirection('up'),
-    'focus-down':         (self) => self._focusInDirection('down'),
-    'workspace-prev':     (self) => {
-      const wm = global.workspace_manager;
-      const index = wm.get_active_workspace_index();
-      if (index > 0) {
-        const workspace = wm.get_workspace_by_index(index - 1);
-        if (workspace) {
-          workspace.activate(global.get_current_time());
-        }
-      }
-    },
-    'workspace-next':     (self) => {
-      const wm = global.workspace_manager;
-      const index = wm.get_active_workspace_index();
-      const workspace = wm.get_workspace_by_index(index + 1);
-      if (workspace) {
-        workspace.activate(global.get_current_time());
-      }
-    },
-    'move-to-workspace-prev': (self) => {
-      const wm = global.workspace_manager;
-      const index = wm.get_active_workspace_index();
-      const window = global.display.focus_window;
-      if (window) {
-        const targetIndex = Math.max(0, index - 1);
-        const targetWs = wm.get_workspace_by_index(targetIndex);
-        window.move_to_workspace(targetWs);
-      }
-    },
-    'move-to-workspace-next': (self) => {
-      const wm = global.workspace_manager;
-      const index = wm.get_active_workspace_index();
-      const window = global.display.focus_window;
-      if (window) {
-        const targetWs = wm.get_workspace_by_index(index + 1);
-        window.move_to_workspace(targetWs);
-      }
-    },
-    'test-keybinding': (self) => {
+    'hypr-swap-master': (self) => self._swapWithMaster(),
+    'hypr-swap-left':   (self) => self._swapInDirection('left'),
+    'hypr-swap-right':  (self) => self._swapInDirection('right'),
+    'hypr-swap-up':     (self) => self._swapInDirection('up'),
+    'hypr-swap-down':   (self) => self._swapInDirection('down'),
+    'hypr-focus-left':         (self) => self._focusInDirection('left'),
+    'hypr-focus-right':        (self) => self._focusInDirection('right'),
+    'hypr-focus-up':           (self) => self._focusInDirection('up'),
+    'hypr-focus-down':         (self) => self._focusInDirection('down'),
+    'hypr-test-keybinding': (self) => {
       log(`[Hypr-GNOME] TEST KEYBINDING TRIGGERED! This proves the system works.`);
     },
     // Workspace switching keybindings
-    'workspace-1': (self) => self._switchToWorkspace(0),
-    'workspace-2': (self) => self._switchToWorkspace(1),
-    'workspace-3': (self) => self._switchToWorkspace(2),
-    'workspace-4': (self) => self._switchToWorkspace(3),
-    'workspace-5': (self) => self._switchToWorkspace(4),
-    'workspace-6': (self) => self._switchToWorkspace(5),
-    'workspace-t': (self) => self._switchToWorkspace(6),
-    'workspace-b': (self) => self._switchToWorkspace(7),
-    'workspace-s': (self) => self._switchToWorkspace(8),
-    'workspace-a': (self) => self._switchToWorkspace(9),
-    'workspace-m': (self) => self._switchToWorkspace(10),
-    'workspace-d': (self) => self._switchToWorkspace(11)
+    'hypr-workspace-1': (self) => self._switchToWorkspace(0),
+    'hypr-workspace-2': (self) => self._switchToWorkspace(1),
+    'hypr-workspace-3': (self) => self._switchToWorkspace(2),
+    'hypr-workspace-4': (self) => self._switchToWorkspace(3),
+    'hypr-workspace-5': (self) => self._switchToWorkspace(4),
+    'hypr-workspace-6': (self) => self._switchToWorkspace(5),
+    'hypr-workspace-t': (self) => self._switchToWorkspace(6),
+    'hypr-workspace-b': (self) => self._switchToWorkspace(7),
+    'hypr-workspace-s': (self) => self._switchToWorkspace(8),
+    'hypr-workspace-a': (self) => self._switchToWorkspace(9),
+    'hypr-workspace-m': (self) => self._switchToWorkspace(10),
+    'hypr-workspace-d': (self) => self._switchToWorkspace(11),
+    // Move window to workspace keybindings (use hypr-* names to avoid Mutter collisions)
+    'hypr-move-to-workspace-1': (self) => self._moveToWorkspace(0),
+    'hypr-move-to-workspace-2': (self) => self._moveToWorkspace(1),
+    'hypr-move-to-workspace-3': (self) => self._moveToWorkspace(2),
+    'hypr-move-to-workspace-4': (self) => self._moveToWorkspace(3),
+    'hypr-move-to-workspace-5': (self) => self._moveToWorkspace(4),
+    'hypr-move-to-workspace-6': (self) => self._moveToWorkspace(5),
+    'hypr-move-to-workspace-t': (self) => self._moveToWorkspace(6),
+    'hypr-move-to-workspace-b': (self) => self._moveToWorkspace(7),
+    'hypr-move-to-workspace-s': (self) => self._moveToWorkspace(8),
+    'hypr-move-to-workspace-a': (self) => self._moveToWorkspace(9),
+    'hypr-move-to-workspace-m': (self) => self._moveToWorkspace(10),
+    'hypr-move-to-workspace-d': (self) => self._moveToWorkspace(11),
+    'hypr-test-move-workspace': (self) => self._moveToWorkspace(0)
 };
 
 // ── HELPER‑FUNCTION ────────────────────────────────────────
@@ -371,6 +348,39 @@ class InteractionHandler {
             }
         } catch (e) {
             log(`[Hypr-GNOME] Error switching to workspace ${workspaceIndex + 1}: ${e.message}`);
+        }
+    }
+
+    _moveToWorkspace(workspaceIndex) {
+        log(`[Hypr-GNOME] _moveToWorkspace called with index: ${workspaceIndex}`);
+        const wm = global.workspace_manager;
+        const totalWorkspaces = wm.get_n_workspaces();
+        const window = global.display.focus_window;
+        
+        // Ensure the workspace index is valid
+        if (workspaceIndex < 0 || workspaceIndex >= totalWorkspaces) {
+            log(`[Hypr-GNOME] Invalid workspace index: ${workspaceIndex} (total: ${totalWorkspaces})`);
+            return;
+        }
+        
+        // Check if there's a focused window
+        if (!window) {
+            log(`[Hypr-GNOME] No focused window to move`);
+            return;
+        }
+        
+        log(`[Hypr-GNOME] Moving window to workspace ${workspaceIndex + 1} (index ${workspaceIndex})`);
+        
+        try {
+            const targetWorkspace = wm.get_workspace_by_index(workspaceIndex);
+            if (targetWorkspace) {
+                window.change_workspace_by_index(workspaceIndex, global.get_current_time());
+                log(`[Hypr-GNOME] Successfully moved window to workspace ${workspaceIndex + 1}`);
+            } else {
+                log(`[Hypr-GNOME] Could not get workspace at index ${workspaceIndex}`);
+            }
+        } catch (e) {
+            log(`[Hypr-GNOME] Error moving window to workspace ${workspaceIndex + 1}: ${e.message}`);
         }
     }
 }

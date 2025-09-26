@@ -62,6 +62,11 @@ tasks:
       - sudo cp schemas/org.gnome.shell.extensions.hypr-gnome.gschema.xml /usr/share/glib-2.0/schemas/
       - sudo glib-compile-schemas /usr/share/glib-2.0/schemas
   
+  show-extension-keybindings:
+    desc: "Show the extension keybindings"
+    cmds:
+      - gsettings list-recursively org.gnome.shell.extensions.hypr-gnome
+  
   # Default task - show available tasks
   default:
     desc: "Show available tasks"
