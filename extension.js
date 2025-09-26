@@ -34,8 +34,9 @@ const KEYBINDINGS = {
     'hypr-focus-up':           (self) => self._focusInDirection('up'),
     'hypr-focus-down':         (self) => self._focusInDirection('down'),
     'hypr-test-keybinding': (self) => {
-      log(`[Hypr-GNOME] TEST KEYBINDING TRIGGERED! This proves the system works.`);
+      // Test keybinding - no logging needed
     },
+    'hypr-close-window': (self) => self._closeWindow(),
     // Workspace switching keybindings
     'hypr-workspace-1': (self) => self._switchToWorkspace(0),
     'hypr-workspace-2': (self) => self._switchToWorkspace(1),
@@ -89,9 +90,8 @@ function getPointerXY() {
 class InteractionHandler {
     constructor(tiler) {
         this.tiler              = tiler;
-        this._settings          = this.tiler.settings;
-        this._wmSettings        = new Gio.Settings({ schema: WM_SCHEMA });
-
+        // Only create static data structures in constructor
+        // No GSettings objects, signals, or main loop sources
         this._wmKeysToDisable   = [];
         this._savedWmShortcuts  = {};
         this._grabOpIds         = [];
@@ -99,21 +99,19 @@ class InteractionHandler {
     }
 
     enable() {
-        log(`[Hypr-GNOME] Extension enabling...`);
+        // Initialize GSettings objects
+        this._settings = this.tiler.settings;
+        this._wmSettings = new Gio.Settings({ schema: WM_SCHEMA });
+        
         this._prepareWmShortcuts();
 
         if (this._wmKeysToDisable.length)
             this._wmKeysToDisable.forEach(k =>
                 this._wmSettings.set_value(k, new GLib.Variant('as', [])));
 
-        // Debug: Check GSettings values
-        this._debugSettings();
-
         this._bindAllShortcuts();
         this._settingsChangedId =
             this._settings.connect('changed', () => this._onSettingsChanged());
-        
-        log(`[Hypr-GNOME] Extension enabled successfully`);
 
         this._grabOpIds.push(
             global.display.connect('grab-op-begin',
@@ -141,42 +139,24 @@ class InteractionHandler {
     }
 
     _bind(key, handler) {
-        log(`[Hypr-GNOME] Registering keybinding: ${key}`);
         try {
             Main.wm.addKeybinding(
                 key,
                 this._settings,
                 Meta.KeyBindingFlags.NONE,
                 Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
-                () => {
-                    log(`[Hypr-GNOME] Keybinding triggered: ${key}`);
-                    handler(this);
-                }
+                () => handler(this)
             );
-            log(`[Hypr-GNOME] Successfully registered keybinding: ${key}`);
         } catch (e) {
             log(`[Hypr-GNOME] Error registering keybinding ${key}: ${e.message}`);
         }
     }
 
     _bindAllShortcuts()  { 
-        log(`[Hypr-GNOME] Binding all shortcuts. Available keybindings: ${Object.keys(KEYBINDINGS).join(', ')}`);
         for (const [k,h] of Object.entries(KEYBINDINGS)) this._bind(k, h); 
     }
     _unbindAllShortcuts(){ for (const k in KEYBINDINGS) Main.wm.removeKeybinding(k); }
 
-    _debugSettings() {
-        log(`[Hypr-GNOME] Debug: Checking GSettings values`);
-        const focusKeys = ['focus-left', 'focus-right', 'focus-up', 'focus-down'];
-        focusKeys.forEach(key => {
-            try {
-                const value = this._settings.get_value(key);
-                log(`[Hypr-GNOME] ${key}: ${value.deep_unpack()}`);
-            } catch (e) {
-                log(`[Hypr-GNOME] Error reading ${key}: ${e.message}`);
-            }
-        });
-    }
 
     _onSettingsChanged() {
         this._unbindAllShortcuts();
@@ -221,20 +201,13 @@ class InteractionHandler {
     }
 
     _focusInDirection(direction) {
-        log(`[Hypr-GNOME] _focusInDirection called with direction: ${direction}`);
         const src = global.display.get_focus_window();
-        log(`[Hypr-GNOME] Focused window: ${src ? src.get_title() : 'none'}`);
         if (!src || !this.tiler.windows.includes(src)) {
-            log(`[Hypr-GNOME] No valid source window or not in tiler windows`);
             return;
         }
         const tgt = this._findTargetInDirection(src, direction);
-        log(`[Hypr-GNOME] Target window: ${tgt ? tgt.get_title() : 'none'}`);
         if (tgt) {
-            log(`[Hypr-GNOME] Activating target window`);
             tgt.activate(global.get_current_time());
-        } else {
-            log(`[Hypr-GNOME] No target window found in direction: ${direction}`);
         }
     }
 
@@ -331,20 +304,14 @@ class InteractionHandler {
         
         // Ensure the workspace index is valid
         if (workspaceIndex < 0 || workspaceIndex >= totalWorkspaces) {
-            log(`[Hypr-GNOME] Invalid workspace index: ${workspaceIndex} (total: ${totalWorkspaces})`);
             return;
         }
-        
-        log(`[Hypr-GNOME] Switching to workspace ${workspaceIndex + 1} (index ${workspaceIndex})`);
         
         try {
             // GNOME 46+ API: Use workspace.activate() instead of wm.activate_workspace()
             const workspace = wm.get_workspace_by_index(workspaceIndex);
             if (workspace) {
                 workspace.activate(global.get_current_time());
-                log(`[Hypr-GNOME] Successfully switched to workspace ${workspaceIndex + 1}`);
-            } else {
-                log(`[Hypr-GNOME] Could not get workspace at index ${workspaceIndex}`);
             }
         } catch (e) {
             log(`[Hypr-GNOME] Error switching to workspace ${workspaceIndex + 1}: ${e.message}`);
@@ -352,35 +319,43 @@ class InteractionHandler {
     }
 
     _moveToWorkspace(workspaceIndex) {
-        log(`[Hypr-GNOME] _moveToWorkspace called with index: ${workspaceIndex}`);
         const wm = global.workspace_manager;
         const totalWorkspaces = wm.get_n_workspaces();
         const window = global.display.focus_window;
         
         // Ensure the workspace index is valid
         if (workspaceIndex < 0 || workspaceIndex >= totalWorkspaces) {
-            log(`[Hypr-GNOME] Invalid workspace index: ${workspaceIndex} (total: ${totalWorkspaces})`);
             return;
         }
         
         // Check if there's a focused window
         if (!window) {
-            log(`[Hypr-GNOME] No focused window to move`);
             return;
         }
-        
-        log(`[Hypr-GNOME] Moving window to workspace ${workspaceIndex + 1} (index ${workspaceIndex})`);
         
         try {
             const targetWorkspace = wm.get_workspace_by_index(workspaceIndex);
             if (targetWorkspace) {
                 window.change_workspace_by_index(workspaceIndex, global.get_current_time());
-                log(`[Hypr-GNOME] Successfully moved window to workspace ${workspaceIndex + 1}`);
-            } else {
-                log(`[Hypr-GNOME] Could not get workspace at index ${workspaceIndex}`);
             }
         } catch (e) {
             log(`[Hypr-GNOME] Error moving window to workspace ${workspaceIndex + 1}: ${e.message}`);
+        }
+    }
+
+    _closeWindow() {
+        const window = global.display.focus_window;
+        
+        // Check if there's a focused window
+        if (!window) {
+            return;
+        }
+        
+        try {
+            // Use window.delete() to close the window
+            window.delete(global.get_current_time());
+        } catch (e) {
+            log(`[Hypr-GNOME] Error closing window: ${e.message}`);
         }
     }
 }
@@ -389,29 +364,12 @@ class InteractionHandler {
 class Tiler {
     constructor(extension) {
         this._extension       = extension;
-        this.settings         = this._extension.getSettings();
-
+        // Only create static data structures in constructor
+        // No GSettings objects, signals, or main loop sources
         this.windows          = [];
         this.grabbedWindow    = null;
         this._signalIds       = new Map();
         this._tileInProgress  = false;
-
-        this._innerGap        = this.settings.get_int('inner-gap');
-        this._outerGapVertical= this.settings.get_int('outer-gap-vertical');
-        this._outerGapHorizontal = this.settings.get_int('outer-gap-horizontal');
-        this._windowPadding   = this.settings.get_int('window-padding');
-        
-        // Window highlighting settings
-        this._enableHighlighting = this.settings.get_boolean('enable-window-highlighting');
-        this._highlightColor = this.settings.get_string('highlight-border-color');
-        this._highlightThickness = this.settings.get_int('highlight-border-thickness');
-        this._highlightRadius = this.settings.get_int('highlight-border-radius');
-        this._highlightShadow = this.settings.get_boolean('highlight-shadow-enabled');
-        
-        // Catppuccin color settings
-        this._useCatppuccinColors = this.settings.get_boolean('use-catppuccin-colors');
-        this._catppuccinScheme = this.settings.get_string('catppuccin-color-scheme');
-        this._catppuccinAccent = this.settings.get_string('catppuccin-accent-color');
         
         // Catppuccin color palettes
         this._catppuccinPalettes = {
@@ -476,7 +434,6 @@ class Tiler {
         // Highlighting state
         this._currentHighlight = null;
         
-        log(`[Hypr-GNOME] Highlighting settings: enabled=${this._enableHighlighting}, color=${this._highlightColor}, thickness=${this._highlightThickness}`);
 
         this._tilingDelay     = TILING_DELAY_MS;
         this._centeringDelay  = CENTERING_DELAY_MS;
@@ -489,6 +446,25 @@ class Tiler {
     }
 
     enable() {
+        // Initialize GSettings and settings values
+        this.settings = this._extension.getSettings();
+        this._innerGap = this.settings.get_int('inner-gap');
+        this._outerGapVertical = this.settings.get_int('outer-gap-vertical');
+        this._outerGapHorizontal = this.settings.get_int('outer-gap-horizontal');
+        this._windowPadding = this.settings.get_int('window-padding');
+        
+        // Window highlighting settings
+        this._enableHighlighting = this.settings.get_boolean('enable-window-highlighting');
+        this._highlightColor = this.settings.get_string('highlight-border-color');
+        this._highlightThickness = this.settings.get_int('highlight-border-thickness');
+        this._highlightRadius = this.settings.get_int('highlight-border-radius');
+        this._highlightShadow = this.settings.get_boolean('highlight-shadow-enabled');
+        
+        // Catppuccin color settings
+        this._useCatppuccinColors = this.settings.get_boolean('use-catppuccin-colors');
+        this._catppuccinScheme = this.settings.get_string('catppuccin-color-scheme');
+        this._catppuccinAccent = this.settings.get_string('catppuccin-accent-color');
+        
         this._loadExceptions();
         this._workspaceManager = global.workspace_manager;
 
@@ -510,7 +486,6 @@ class Tiler {
         this._signalIds.set('focus-window', {
             object: global.display,
             id: global.display.connect('notify::focus-window', ()=>{
-                log(`[Hypr-GNOME] Focus changed, updating highlight`);
                 this._updateHighlight();
             })
         });
@@ -866,11 +841,9 @@ class Tiler {
         
         const windowActor = focusedWindow.get_compositor_private();
         if (!windowActor) {
-            log(`[Hypr-GNOME] No window actor for focused window: ${focusedWindow.get_title()}`);
             return;
         }
         
-        log(`[Hypr-GNOME] Adding highlight to window: ${focusedWindow.get_title()}`);
         this._removeHighlight();
         this._addHighlight(windowActor);
     }
@@ -879,7 +852,6 @@ class Tiler {
         if (!this._enableHighlighting) return;
         
         const currentColor = this._getHighlightColor();
-        log(`[Hypr-GNOME] Creating border highlight with settings: color=${currentColor}, thickness=${this._highlightThickness}`);
         
         // Create a container for the border
         this._currentHighlight = new Clutter.Actor({
@@ -936,8 +908,6 @@ class Tiler {
         
         // Add to window actor
         windowActor.add_child(this._currentHighlight);
-        
-        log(`[Hypr-GNOME] Border highlight added to window`);
     }
     
     _removeHighlight() {
@@ -950,21 +920,14 @@ class Tiler {
     
     _getHighlightColor() {
         // Return the appropriate highlight color based on settings
-        log(`[Hypr-GNOME] _getHighlightColor: useCatppuccin=${this._useCatppuccinColors}, scheme=${this._catppuccinScheme}, accent=${this._catppuccinAccent}`);
-        
         if (this._useCatppuccinColors) {
             const palette = this._catppuccinPalettes[this._catppuccinScheme];
             if (palette && palette[this._catppuccinAccent]) {
-                const color = palette[this._catppuccinAccent];
-                log(`[Hypr-GNOME] Using Catppuccin color: ${color}`);
-                return color;
+                return palette[this._catppuccinAccent];
             }
             // Fallback to lavender if accent not found
-            const fallbackColor = palette?.lavender || '#babbf1';
-            log(`[Hypr-GNOME] Using Catppuccin fallback color: ${fallbackColor}`);
-            return fallbackColor;
+            return palette?.lavender || '#babbf1';
         }
-        log(`[Hypr-GNOME] Using custom color: ${this._highlightColor}`);
         return this._highlightColor;
     }
     
@@ -988,8 +951,8 @@ class Tiler {
 export default class HyprGnomeExtension extends Extension {
     constructor(metadata) {
         super(metadata);
-        this._managers = new Map();
-        this._settings = null;
+        // Only create static data structures in constructor
+        // No dynamic objects, signals, or main loop sources
     }
     
     _configureFixedWorkspaces() {
@@ -1006,7 +969,6 @@ export default class HyprGnomeExtension extends Extension {
             wmSettings.set_int('num-workspaces', workspaceNames.length);
             wmSettings.set_strv('workspace-names', workspaceNames);
             
-            log(`[Hypr-GNOME] Configured fixed workspaces: ${workspaceNames.length} workspaces with names ${workspaceNames.join(', ')}`);
         } catch (error) {
             log(`[Hypr-GNOME] Error configuring fixed workspaces: ${error.message}`);
         }
@@ -1015,6 +977,7 @@ export default class HyprGnomeExtension extends Extension {
     enable() {
         // Initialize GSettings
         this._settings = this.getSettings();
+        this._managers = new Map();
         
         // Configure fixed workspaces
         this._configureFixedWorkspaces();

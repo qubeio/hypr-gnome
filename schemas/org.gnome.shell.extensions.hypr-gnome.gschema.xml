@@ -43,6 +43,10 @@
       <default><![CDATA[['<Super>t']]]></default>
       <summary>Test keybinding to verify system works.</summary>
     </key>
+    <key name="hypr-close-window" type="as">
+      <default><![CDATA[['<Alt>q']]]></default>
+      <summary>Close the focused window.</summary>
+    </key>
 
     <!-- Workspace switching keybindings -->
     <key name="hypr-workspace-1" type="as">

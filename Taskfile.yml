@@ -4,7 +4,7 @@ vars:
   UUID: hypr-gnome@qubeio.com
   VERSION: 2.0
   EXTDIR: '{{.HOME}}/.local/share/gnome-shell/extensions'
-  COMMON_FILES: schemas exceptions.txt locale *.css README.md LICENSE layouts keybindings rules animations monitors docs
+  COMMON_FILES: schemas exceptions.txt locale *.css README.md LICENSE docs
 
 tasks:
   # Build the extension as a ZIP archive
@@ -26,7 +26,7 @@ tasks:
         sed -e "s/__UUID__/{{.UUID}}/g" \
             -e "s/__VERSION__/{{.VERSION}}/g" \
             metadata_modern.json.in > build/{{.UUID}}/metadata.json
-      - cd build && zip -qr ../{{.UUID}}-v{{.VERSION}}.zip .
+      - cd build/{{.UUID}} && zip -qr ../../{{.UUID}}-v{{.VERSION}}.zip *
       - rm -rf build
       - echo "✓  {{.UUID}}-v{{.VERSION}}.zip created"
 
@@ -50,7 +50,7 @@ tasks:
         sed -e "s/__UUID__/{{.UUID}}/g" \
             -e "s/__VERSION__/{{.VERSION}}/g" \
             metadata_modern.json.in > build/{{.UUID}}/metadata.json
-      - cd build && zip -qr ../{{.UUID}}-gallery-v{{.VERSION}}.zip .
+      - cd build/{{.UUID}} && zip -qr ../../{{.UUID}}-gallery-v{{.VERSION}}.zip *
       - rm -rf build
       - echo "✓  {{.UUID}}-gallery-v{{.VERSION}}.zip created"
       - echo "This ZIP is ready for extensions.gnome.org submission"

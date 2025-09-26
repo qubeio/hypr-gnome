@@ -70,6 +70,9 @@ Main.wm.removeKeybinding('focus-right');
 - **Workspace navigation**: Alt+Ctrl+Left/Right for previous/next workspace
 - **Window movement**: Alt+Shift+Ctrl+Left/Right to move window to previous/next workspace
 
+### Window Management Keybindings
+- **Close window**: Alt+Q closes the currently focused window (macOS-style behavior)
+
 ### Troubleshooting: Alt+Shift+number and move-to-workspace
 - **Symptom**: Some combos (e.g., Alt+Shift+1, Alt+Ctrl+R) did not trigger our handlers.
 - **Root cause**: We originally used key names that collide with Mutter’s built‑in bindings (e.g., `move-to-workspace-1`). GNOME warned: “Trying to re-add keybinding \"move-to-workspace-1\"”, so grabs/dispatch were unreliable.
