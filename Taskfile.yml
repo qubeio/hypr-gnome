@@ -54,6 +54,14 @@ tasks:
       - echo "Check looking glass for errors as well- Alt+F2, type 'lg', press Enter"
       - gnome-extensions info hypr-gnome@qubeio.com
       - journalctl --user --since "1 minute ago" | grep -i "extension\|error\|hypr"
+  
+  # Manually copy the schema to the system schema directory
+  copy-schema:
+    desc: "Copy the schema to the system schema directory"
+    cmds:
+      - sudo cp schemas/org.gnome.shell.extensions.hypr-gnome.gschema.xml /usr/share/glib-2.0/schemas/
+      - sudo glib-compile-schemas /usr/share/glib-2.0/schemas
+  
   # Default task - show available tasks
   default:
     desc: "Show available tasks"
