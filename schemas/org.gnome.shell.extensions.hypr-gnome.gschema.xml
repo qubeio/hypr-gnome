@@ -166,6 +166,40 @@
       <summary>Behavior for newly opened windows.</summary>
       <description>Determines if a new window is added as master or stack window.</description>
     </key>
+
+    <!-- Window padding settings -->
+    <key name="window-padding" type="i">
+      <default>8</default>
+      <summary>Padding around windows in pixels.</summary>
+      <description>Additional padding applied around each window for better visual separation.</description>
+    </key>
+
+    <!-- Window highlighting settings -->
+    <key name="enable-window-highlighting" type="b">
+      <default>true</default>
+      <summary>Enable window highlighting for focused windows.</summary>
+      <description>Shows a visual border around the currently focused window.</description>
+    </key>
+    <key name="highlight-border-color" type="s">
+      <default>'#ffd700'</default>
+      <summary>Color of the highlight border.</summary>
+      <description>CSS color value for the window highlight border (e.g., #ffd700, #00ff00, blue).</description>
+    </key>
+    <key name="highlight-border-thickness" type="i">
+      <default>3</default>
+      <summary>Thickness of the highlight border in pixels.</summary>
+      <description>Width of the border around focused windows.</description>
+    </key>
+    <key name="highlight-border-radius" type="i">
+      <default>4</default>
+      <summary>Border radius for rounded corners in pixels.</summary>
+      <description>Radius for rounded corners of the highlight border.</description>
+    </key>
+    <key name="highlight-shadow-enabled" type="b">
+      <default>true</default>
+      <summary>Enable shadow effect for highlighted windows.</summary>
+      <description>Adds a subtle shadow around the highlighted window border.</description>
+    </key>
     
   </schema>
 </schemalist>

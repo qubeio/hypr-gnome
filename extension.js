@@ -399,6 +399,19 @@ class Tiler {
         this._innerGap        = this.settings.get_int('inner-gap');
         this._outerGapVertical= this.settings.get_int('outer-gap-vertical');
         this._outerGapHorizontal = this.settings.get_int('outer-gap-horizontal');
+        this._windowPadding   = this.settings.get_int('window-padding');
+        
+        // Window highlighting settings
+        this._enableHighlighting = this.settings.get_boolean('enable-window-highlighting');
+        this._highlightColor = this.settings.get_string('highlight-border-color');
+        this._highlightThickness = this.settings.get_int('highlight-border-thickness');
+        this._highlightRadius = this.settings.get_int('highlight-border-radius');
+        this._highlightShadow = this.settings.get_boolean('highlight-shadow-enabled');
+        
+        // Highlighting state
+        this._currentHighlight = null;
+        
+        log(`[Hypr-GNOME] Highlighting settings: enabled=${this._enableHighlighting}, color=${this._highlightColor}, thickness=${this._highlightThickness}`);
 
         this._tilingDelay     = TILING_DELAY_MS;
         this._centeringDelay  = CENTERING_DELAY_MS;
@@ -427,6 +440,15 @@ class Tiler {
             object: this.settings,
             id: this.settings.connect('changed', ()=>this._onSettingsChanged())
         });
+        
+        // Track focus changes for highlighting
+        this._signalIds.set('focus-window', {
+            object: global.display,
+            id: global.display.connect('notify::focus-window', ()=>{
+                log(`[Hypr-GNOME] Focus changed, updating highlight`);
+                this._updateHighlight();
+            })
+        });
     }
 
     disable() {
@@ -439,6 +461,9 @@ class Tiler {
 
         this._interactionHandler.disable();
         this._disconnectFromWorkspace();
+        
+        // Clean up highlighting
+        this._removeHighlight();
 
         for (const [,sig] of this._signalIds) {
             try { sig.object.disconnect(sig.id); } catch {}
@@ -451,7 +476,17 @@ class Tiler {
         this._innerGap          = this.settings.get_int('inner-gap');
         this._outerGapVertical  = this.settings.get_int('outer-gap-vertical');
         this._outerGapHorizontal= this.settings.get_int('outer-gap-horizontal');
+        this._windowPadding     = this.settings.get_int('window-padding');
+        
+        // Update highlighting settings
+        this._enableHighlighting = this.settings.get_boolean('enable-window-highlighting');
+        this._highlightColor = this.settings.get_string('highlight-border-color');
+        this._highlightThickness = this.settings.get_int('highlight-border-thickness');
+        this._highlightRadius = this.settings.get_int('highlight-border-radius');
+        this._highlightShadow = this.settings.get_boolean('highlight-shadow-enabled');
+        
         this.queueTile();
+        this._updateHighlight();
     }
 
     _loadExceptions() {
@@ -643,12 +678,13 @@ class Tiler {
     _splitLayout(windows, area) {
         if (windows.length === 0) return;
         if (windows.length === 1) {
+            // Apply window padding to single window in split layout
             windows[0].move_resize_frame(
                 true,
-                area.x,
-                area.y,
-                area.width,
-                area.height
+                area.x + this._windowPadding,
+                area.y + this._windowPadding,
+                area.width - 2 * this._windowPadding,
+                area.height - 2 * this._windowPadding
             );
             return;
         }
@@ -707,24 +743,26 @@ class Tiler {
             if (win.get_maximized()) win.unmaximize(Meta.MaximizeFlags.BOTH);
         });
         if (windowsToTile.length === 1) {
+            // Apply window padding to single window
             windowsToTile[0].move_resize_frame(
                 true,
-                innerArea.x,
-                innerArea.y,
-                innerArea.width,
-                innerArea.height
+                innerArea.x + this._windowPadding,
+                innerArea.y + this._windowPadding,
+                innerArea.width - 2 * this._windowPadding,
+                innerArea.height - 2 * this._windowPadding
             );
             return;
         }
         const gap = Math.floor(this._innerGap / 2);
         const masterWidth = Math.floor(innerArea.width / 2) - gap;
         const master = windowsToTile[0];
+        // Apply window padding to master window
         master.move_resize_frame(
             true,
-            innerArea.x,
-            innerArea.y,
-            masterWidth,
-            innerArea.height
+            innerArea.x + this._windowPadding,
+            innerArea.y + this._windowPadding,
+            masterWidth - 2 * this._windowPadding,
+            innerArea.height - 2 * this._windowPadding
         );
         const stackArea = {
             x: innerArea.x + masterWidth + this._innerGap,
@@ -733,6 +771,91 @@ class Tiler {
             height: innerArea.height,
         };
         this._splitLayout(windowsToTile.slice(1), stackArea);
+        
+        // Update highlight after tiling
+        this._updateHighlight();
+    }
+    
+    _updateHighlight() {
+        if (!this._enableHighlighting) {
+            this._removeHighlight();
+            return;
+        }
+        
+        const focusedWindow = global.display.get_focus_window();
+        if (!focusedWindow) {
+            this._removeHighlight();
+            return;
+        }
+        
+        // Only highlight tiled windows (windows managed by this extension)
+        if (!this.windows.includes(focusedWindow)) {
+            this._removeHighlight();
+            return;
+        }
+        
+        const windowActor = focusedWindow.get_compositor_private();
+        if (!windowActor) {
+            log(`[Hypr-GNOME] No window actor for focused window: ${focusedWindow.get_title()}`);
+            return;
+        }
+        
+        log(`[Hypr-GNOME] Adding highlight to window: ${focusedWindow.get_title()}`);
+        this._removeHighlight();
+        this._addHighlight(windowActor);
+    }
+    
+    _addHighlight(windowActor) {
+        if (!this._enableHighlighting) return;
+        
+        log(`[Hypr-GNOME] Creating highlight actor with settings: color=${this._highlightColor}, thickness=${this._highlightThickness}`);
+        
+        // Create highlight border actor
+        this._currentHighlight = new Clutter.Actor({
+            reactive: false
+        });
+        
+        // Set size to match window
+        const rect = windowActor.get_allocation_box();
+        this._currentHighlight.set_size(rect.get_width(), rect.get_height());
+        
+        // Set a simple colored background for now
+        this._currentHighlight.set_background_color(
+            new Clutter.Color({
+                red: this._parseColor(this._highlightColor, 'red'),
+                green: this._parseColor(this._highlightColor, 'green'),
+                blue: this._parseColor(this._highlightColor, 'blue'),
+                alpha: 100  // Semi-transparent
+            })
+        );
+        
+        // Add to window actor
+        windowActor.add_child(this._currentHighlight);
+        
+        log(`[Hypr-GNOME] Highlight actor added to window`);
+    }
+    
+    _removeHighlight() {
+        if (this._currentHighlight && this._currentHighlight.get_parent()) {
+            this._currentHighlight.get_parent().remove_child(this._currentHighlight);
+        }
+        this._currentHighlight = null;
+    }
+    
+    
+    _parseColor(colorStr, component) {
+        // Parse hex color string like #ffd700
+        const hex = colorStr.replace('#', '');
+        const r = parseInt(hex.substr(0, 2), 16);
+        const g = parseInt(hex.substr(2, 2), 16);
+        const b = parseInt(hex.substr(4, 2), 16);
+        
+        switch(component) {
+            case 'red': return r;
+            case 'green': return g;
+            case 'blue': return b;
+            default: return 0;
+        }
     }
 }
 
