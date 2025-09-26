@@ -689,9 +689,32 @@ export default class HyprGnomeExtension extends Extension {
         this._settings = null;
     }
     
+    _configureFixedWorkspaces() {
+        try {
+            // Configure mutter settings for fixed workspaces
+            const mutterSettings = new Gio.Settings({ schema: 'org.gnome.mutter' });
+            const wmSettings = new Gio.Settings({ schema: 'org.gnome.desktop.wm.preferences' });
+            
+            // Disable dynamic workspaces
+            mutterSettings.set_boolean('dynamic-workspaces', false);
+            
+            // Set workspace count and names
+            const workspaceNames = ['1', '2', '3', '4', '5', '6', 'T', 'B', 'S', 'A', 'M'];
+            wmSettings.set_int('num-workspaces', workspaceNames.length);
+            wmSettings.set_strv('workspace-names', workspaceNames);
+            
+            log(`[Hypr-GNOME] Configured fixed workspaces: ${workspaceNames.length} workspaces with names ${workspaceNames.join(', ')}`);
+        } catch (error) {
+            log(`[Hypr-GNOME] Error configuring fixed workspaces: ${error.message}`);
+        }
+    }
+    
     enable() {
         // Initialize GSettings
         this._settings = this.getSettings();
+        
+        // Configure fixed workspaces
+        this._configureFixedWorkspaces();
         
         // Initialize core managers (TODO: Enable when managers are properly implemented)
         // this._managers.set('tiling', new TilingManager());
