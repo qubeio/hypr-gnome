@@ -101,4 +101,4 @@ Refer to docs/workspaces.md for implementation instructions
   - [x] Add highlighting settings to schema (color, thickness, style)
   - [x] Implement highlighting logic in tiling manager
   - [x] Ensure highlighting works with window focus changes
-  - [ ] Test highlighting with different themes and window states (needs testing)
+  - [x] Test highlighting with different themes and window states

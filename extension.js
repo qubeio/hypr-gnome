@@ -808,9 +808,9 @@ class Tiler {
     _addHighlight(windowActor) {
         if (!this._enableHighlighting) return;
         
-        log(`[Hypr-GNOME] Creating highlight actor with settings: color=${this._highlightColor}, thickness=${this._highlightThickness}`);
+        log(`[Hypr-GNOME] Creating border highlight with settings: color=${this._highlightColor}, thickness=${this._highlightThickness}`);
         
-        // Create highlight border actor
+        // Create a container for the border
         this._currentHighlight = new Clutter.Actor({
             reactive: false
         });
@@ -819,20 +819,54 @@ class Tiler {
         const rect = windowActor.get_allocation_box();
         this._currentHighlight.set_size(rect.get_width(), rect.get_height());
         
-        // Set a simple colored background for now
-        this._currentHighlight.set_background_color(
-            new Clutter.Color({
-                red: this._parseColor(this._highlightColor, 'red'),
-                green: this._parseColor(this._highlightColor, 'green'),
-                blue: this._parseColor(this._highlightColor, 'blue'),
-                alpha: 100  // Semi-transparent
-            })
-        );
+        // Create border actors for each side
+        const borderColor = new Clutter.Color({
+            red: this._parseColor(this._highlightColor, 'red'),
+            green: this._parseColor(this._highlightColor, 'green'),
+            blue: this._parseColor(this._highlightColor, 'blue'),
+            alpha: 255
+        });
+        
+        // Top border
+        const topBorder = new Clutter.Actor({
+            reactive: false
+        });
+        topBorder.set_position(0, 0);
+        topBorder.set_size(rect.get_width(), this._highlightThickness);
+        topBorder.set_background_color(borderColor);
+        this._currentHighlight.add_child(topBorder);
+        
+        // Bottom border
+        const bottomBorder = new Clutter.Actor({
+            reactive: false
+        });
+        bottomBorder.set_position(0, rect.get_height() - this._highlightThickness);
+        bottomBorder.set_size(rect.get_width(), this._highlightThickness);
+        bottomBorder.set_background_color(borderColor);
+        this._currentHighlight.add_child(bottomBorder);
+        
+        // Left border
+        const leftBorder = new Clutter.Actor({
+            reactive: false
+        });
+        leftBorder.set_position(0, 0);
+        leftBorder.set_size(this._highlightThickness, rect.get_height());
+        leftBorder.set_background_color(borderColor);
+        this._currentHighlight.add_child(leftBorder);
+        
+        // Right border
+        const rightBorder = new Clutter.Actor({
+            reactive: false
+        });
+        rightBorder.set_position(rect.get_width() - this._highlightThickness, 0);
+        rightBorder.set_size(this._highlightThickness, rect.get_height());
+        rightBorder.set_background_color(borderColor);
+        this._currentHighlight.add_child(rightBorder);
         
         // Add to window actor
         windowActor.add_child(this._currentHighlight);
         
-        log(`[Hypr-GNOME] Highlight actor added to window`);
+        log(`[Hypr-GNOME] Border highlight added to window`);
     }
     
     _removeHighlight() {
