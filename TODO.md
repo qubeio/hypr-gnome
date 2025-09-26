@@ -85,3 +85,20 @@ Refer to docs/workspaces.md for implementation instructions
 - [x] Update extension.js KEYBINDINGS map to use hypr- prefix
 - [x] Test all keybindings with new naming convention
 - [x] Update documentation to reflect new naming convention
+
+### Next – Window padding and highlighting
+
+#### Implement window padding
+- [ ] Add configurable padding around windows
+  - [ ] Add padding settings to schema (default: 8 pixels)
+  - [ ] Update tiling logic to account for padding in window positioning
+  - [ ] Ensure padding works with existing gap settings
+  - [ ] Test padding with different window counts and layouts
+
+#### Implement window highlighting
+- [ ] Add visual highlighting for focused/active windows
+  - [ ] Research GNOME Shell highlighting APIs and best practices
+  - [ ] Add highlighting settings to schema (color, thickness, style)
+  - [ ] Implement highlighting logic in tiling manager
+  - [ ] Ensure highlighting works with window focus changes
+  - [ ] Test highlighting with different themes and window states
