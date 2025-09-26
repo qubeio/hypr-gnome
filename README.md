@@ -28,12 +28,12 @@ This extension provides GNOME users with powerful tiling capabilities, extensive
 * **Configurable New Window Behavior:** Choose whether new windows open as the new master or are appended to the end of the stack.
 
 ### Hyprland-Inspired Keyboard Shortcuts
-* **Window Focus:** `Super + h/j/k/l` for directional focus navigation
-* **Window Movement:** `Super + Shift + h/j/k/l` to move windows between positions
-* **Window Resizing:** `Super + Ctrl + h/j/k/l` for dynamic resize operations
-* **Layout Management:** `Super + Space` to cycle through layouts, `Super + t` to toggle tiling/floating
-* **Workspace Management:** `Super + 1-9` to switch workspaces, `Super + Shift + 1-9` to move windows
-* **Application Management:** `Super + d` for application launcher, `Super + q` to close windows
+* **Window Focus:** `Alt + h/j/k/l` for directional focus navigation
+* **Window Movement:** `Alt + Shift + h/j/k/l` to move windows between positions
+* **Window Resizing:** `Alt + Ctrl + h/j/k/l` for dynamic resize operations
+* **Layout Management:** `Alt + Space` to cycle through layouts, `Alt + t` to toggle tiling/floating
+* **Workspace Management:** `Alt + 1-9` to switch workspaces, `Alt + Shift + 1-9` to move windows
+* **Application Management:** `Alt + d` for application launcher, `Alt + q` to close windows
 
 ### Advanced Features
 * **Multi-Monitor Support:** Independent layouts and workspace management per monitor
@@ -186,7 +186,7 @@ general {
 }
 
 # Hot reload configuration
-Super + r  # Reload config without restart
+Alt + r  # Reload config without restart
 ```
 
 ## Roadmap
