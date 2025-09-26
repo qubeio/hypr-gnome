@@ -103,20 +103,35 @@ Refer to docs/workspaces.md for implementation instructions
   - [x] Ensure highlighting works with window focus changes
   - [x] Test highlighting with different themes and window states
 
-### Next – Catppuccin colors and options screen
+### ✅ COMPLETED – Catppuccin colors and options screen
 
 #### Implement Catppuccin color scheme
-- [ ] Add Catppuccin color options to highlighting settings
-  - [ ] Research Catppuccin color palette (Use Frappe Lavender as the highlight color)
-  - [ ] Add Catppuccin color presets to schema (accent, surface, text colors)
-  - [ ] Update highlighting logic to use Catppuccin colors
-  - [ ] Test Catppuccin colors with different themes and window states
+- [x] Add Catppuccin color options to highlighting settings
+  - [x] Research Catppuccin color palette (Use Frappe Lavender as the highlight color)
+  - [x] Add Catppuccin color presets to schema (accent, surface, text colors)
+  - [x] Update highlighting logic to use Catppuccin colors
+  - [x] Test Catppuccin colors with different themes and window states
 
 #### Create extension options screen
-- [ ] Design and implement options/preferences UI
-  - [ ] Create modern preferences interface using Adwaita components
-  - [ ] Add padding size configuration as first option
-  - [ ] Add highlighting color and style configuration
-  - [ ] Add workspace and keybinding configuration sections
-  - [ ] Implement live preview of settings changes
-  - [ ] Test options screen with different GNOME themes
+- [x] Design and implement options/preferences UI
+  - [x] Create modern preferences interface using Adwaita components
+  - [x] Add padding size configuration as first option
+  - [x] Add highlighting color and style configuration
+  - [x] Add workspace and keybinding configuration sections
+  - [x] Implement live preview of settings changes
+  - [x] Test options screen with different GNOME themes
+
+### Next – Advanced tiling features and layouts
+
+
+#### Implement window resizing
+- [ ] Add keyboard-based window resizing
+- [ ] Add mouse-based window resizing
+- [ ] Add resize keybindings (Alt+Ctrl+arrows)
+- [ ] Test resizing with different layouts
+
+#### Implement additional tiling layouts
+- [ ] Add Monocle layout (fullscreen stack) - Use Aerospace on Mac as example where the stack is visible slightly on the right and focus right left cycles through them.
+      The "peek" window should update so you know which one is coming next.
+- [ ] Add layout switching keybindings
+- [ ] Test all layouts with different window counts
