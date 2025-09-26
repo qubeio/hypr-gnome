@@ -102,3 +102,21 @@ Refer to docs/workspaces.md for implementation instructions
   - [x] Implement highlighting logic in tiling manager
   - [x] Ensure highlighting works with window focus changes
   - [x] Test highlighting with different themes and window states
+
+### Next – Catppuccin colors and options screen
+
+#### Implement Catppuccin color scheme
+- [ ] Add Catppuccin color options to highlighting settings
+  - [ ] Research Catppuccin color palette (Use Frappe Lavender as the highlight color)
+  - [ ] Add Catppuccin color presets to schema (accent, surface, text colors)
+  - [ ] Update highlighting logic to use Catppuccin colors
+  - [ ] Test Catppuccin colors with different themes and window states
+
+#### Create extension options screen
+- [ ] Design and implement options/preferences UI
+  - [ ] Create modern preferences interface using Adwaita components
+  - [ ] Add padding size configuration as first option
+  - [ ] Add highlighting color and style configuration
+  - [ ] Add workspace and keybinding configuration sections
+  - [ ] Implement live preview of settings changes
+  - [ ] Test options screen with different GNOME themes

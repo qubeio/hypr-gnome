@@ -408,6 +408,71 @@ class Tiler {
         this._highlightRadius = this.settings.get_int('highlight-border-radius');
         this._highlightShadow = this.settings.get_boolean('highlight-shadow-enabled');
         
+        // Catppuccin color settings
+        this._useCatppuccinColors = this.settings.get_boolean('use-catppuccin-colors');
+        this._catppuccinScheme = this.settings.get_string('catppuccin-color-scheme');
+        this._catppuccinAccent = this.settings.get_string('catppuccin-accent-color');
+        
+        // Catppuccin color palettes
+        this._catppuccinPalettes = {
+            frappe: {
+                lavender: '#babbf1',
+                blue: '#8caaee',
+                rosewater: '#f2d5cf',
+                flamingo: '#eebebe',
+                pink: '#f4b8e4',
+                mauve: '#ca9ee6',
+                red: '#e78284',
+                maroon: '#ea999c',
+                green: '#a6d189',
+                teal: '#81c8be',
+                yellow: '#e5c890',
+                peach: '#ef9f76'
+            },
+            latte: {
+                lavender: '#7287fd',
+                blue: '#1e66f5',
+                rosewater: '#dc8a78',
+                flamingo: '#dd7878',
+                pink: '#ea76cb',
+                mauve: '#8839ef',
+                red: '#d20f39',
+                maroon: '#e64553',
+                green: '#40a02b',
+                teal: '#179299',
+                yellow: '#df8e1d',
+                peach: '#fe8019'
+            },
+            macchiato: {
+                lavender: '#b7bdf8',
+                blue: '#8aadf4',
+                rosewater: '#f4dbd6',
+                flamingo: '#f0c6c6',
+                pink: '#f5bde6',
+                mauve: '#c6a0f6',
+                red: '#ed8796',
+                maroon: '#ee99a0',
+                green: '#a6da95',
+                teal: '#8bd5ca',
+                yellow: '#eed49f',
+                peach: '#f5a97f'
+            },
+            mocha: {
+                lavender: '#b4befe',
+                blue: '#89b4fa',
+                rosewater: '#f5e0dc',
+                flamingo: '#f2cdcd',
+                pink: '#f5c2e7',
+                mauve: '#cba6f7',
+                red: '#f38ba8',
+                maroon: '#eba0ac',
+                green: '#a6e3a1',
+                teal: '#94e2d5',
+                yellow: '#f9e2af',
+                peach: '#fab387'
+            }
+        };
+        
         // Highlighting state
         this._currentHighlight = null;
         
@@ -484,6 +549,11 @@ class Tiler {
         this._highlightThickness = this.settings.get_int('highlight-border-thickness');
         this._highlightRadius = this.settings.get_int('highlight-border-radius');
         this._highlightShadow = this.settings.get_boolean('highlight-shadow-enabled');
+        
+        // Update Catppuccin settings
+        this._useCatppuccinColors = this.settings.get_boolean('use-catppuccin-colors');
+        this._catppuccinScheme = this.settings.get_string('catppuccin-color-scheme');
+        this._catppuccinAccent = this.settings.get_string('catppuccin-accent-color');
         
         this.queueTile();
         this._updateHighlight();
@@ -808,7 +878,8 @@ class Tiler {
     _addHighlight(windowActor) {
         if (!this._enableHighlighting) return;
         
-        log(`[Hypr-GNOME] Creating border highlight with settings: color=${this._highlightColor}, thickness=${this._highlightThickness}`);
+        const currentColor = this._getHighlightColor();
+        log(`[Hypr-GNOME] Creating border highlight with settings: color=${currentColor}, thickness=${this._highlightThickness}`);
         
         // Create a container for the border
         this._currentHighlight = new Clutter.Actor({
@@ -821,9 +892,9 @@ class Tiler {
         
         // Create border actors for each side
         const borderColor = new Clutter.Color({
-            red: this._parseColor(this._highlightColor, 'red'),
-            green: this._parseColor(this._highlightColor, 'green'),
-            blue: this._parseColor(this._highlightColor, 'blue'),
+            red: this._parseColor(currentColor, 'red'),
+            green: this._parseColor(currentColor, 'green'),
+            blue: this._parseColor(currentColor, 'blue'),
             alpha: 255
         });
         
@@ -876,6 +947,26 @@ class Tiler {
         this._currentHighlight = null;
     }
     
+    
+    _getHighlightColor() {
+        // Return the appropriate highlight color based on settings
+        log(`[Hypr-GNOME] _getHighlightColor: useCatppuccin=${this._useCatppuccinColors}, scheme=${this._catppuccinScheme}, accent=${this._catppuccinAccent}`);
+        
+        if (this._useCatppuccinColors) {
+            const palette = this._catppuccinPalettes[this._catppuccinScheme];
+            if (palette && palette[this._catppuccinAccent]) {
+                const color = palette[this._catppuccinAccent];
+                log(`[Hypr-GNOME] Using Catppuccin color: ${color}`);
+                return color;
+            }
+            // Fallback to lavender if accent not found
+            const fallbackColor = palette?.lavender || '#babbf1';
+            log(`[Hypr-GNOME] Using Catppuccin fallback color: ${fallbackColor}`);
+            return fallbackColor;
+        }
+        log(`[Hypr-GNOME] Using custom color: ${this._highlightColor}`);
+        return this._highlightColor;
+    }
     
     _parseColor(colorStr, component) {
         // Parse hex color string like #ffd700

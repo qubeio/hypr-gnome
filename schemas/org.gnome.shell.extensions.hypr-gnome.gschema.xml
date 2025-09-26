@@ -200,6 +200,23 @@
       <summary>Enable shadow effect for highlighted windows.</summary>
       <description>Adds a subtle shadow around the highlighted window border.</description>
     </key>
+
+    <!-- Catppuccin color scheme settings -->
+    <key name="catppuccin-color-scheme" type="s">
+      <default>'frappe'</default>
+      <summary>Catppuccin color scheme variant.</summary>
+      <description>Choose between different Catppuccin color scheme variants (latte, frappe, macchiato, mocha).</description>
+    </key>
+    <key name="catppuccin-accent-color" type="s">
+      <default>'lavender'</default>
+      <summary>Catppuccin accent color for highlighting.</summary>
+      <description>Choose the accent color from the Catppuccin palette (lavender, blue, rosewater, flamingo, pink, mauve, red, maroon, green, teal, yellow, peach).</description>
+    </key>
+    <key name="use-catppuccin-colors" type="b">
+      <default>true</default>
+      <summary>Use Catppuccin color scheme for highlighting.</summary>
+      <description>When enabled, uses Catppuccin color palette instead of custom highlight color.</description>
+    </key>
     
   </schema>
 </schemalist>
