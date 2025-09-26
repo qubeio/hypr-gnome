@@ -64,6 +64,12 @@ Main.wm.removeKeybinding('focus-right');
 - `Main.wm.addKeybinding` works for Xorg sessions. Under Wayland, extensions
   cannot register global shortcuts in the same way; behavior is limited.
 
+### Workspace Keybindings
+- **Numbered workspaces**: Alt+1 through Alt+6 switch to workspaces 1-6
+- **Letter workspaces**: Alt+T, Alt+B, Alt+S, Alt+A, Alt+M, Alt+D switch to named workspaces
+- **Workspace navigation**: Alt+Ctrl+Left/Right for previous/next workspace
+- **Window movement**: Alt+Shift+Ctrl+Left/Right to move window to previous/next workspace
+
 ### References
 - Mutter keybinding flags (`Meta.KeyBindingFlags`):
   [meta-keybinding.h](https://gitlab.gnome.org/GNOME/mutter/-/blob/main/src/meta/meta-keybinding.h)

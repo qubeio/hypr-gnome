@@ -60,6 +60,56 @@
       <summary>Test keybinding to verify system works.</summary>
     </key>
 
+    <!-- Workspace switching keybindings -->
+    <key name="workspace-1" type="as">
+      <default><![CDATA[['<Alt>1']]]></default>
+      <summary>Switch to workspace 1.</summary>
+    </key>
+    <key name="workspace-2" type="as">
+      <default><![CDATA[['<Alt>2']]]></default>
+      <summary>Switch to workspace 2.</summary>
+    </key>
+    <key name="workspace-3" type="as">
+      <default><![CDATA[['<Alt>3']]]></default>
+      <summary>Switch to workspace 3.</summary>
+    </key>
+    <key name="workspace-4" type="as">
+      <default><![CDATA[['<Alt>4']]]></default>
+      <summary>Switch to workspace 4.</summary>
+    </key>
+    <key name="workspace-5" type="as">
+      <default><![CDATA[['<Alt>5']]]></default>
+      <summary>Switch to workspace 5.</summary>
+    </key>
+    <key name="workspace-6" type="as">
+      <default><![CDATA[['<Alt>6']]]></default>
+      <summary>Switch to workspace 6.</summary>
+    </key>
+    <key name="workspace-t" type="as">
+      <default><![CDATA[['<Alt>t']]]></default>
+      <summary>Switch to workspace T.</summary>
+    </key>
+    <key name="workspace-b" type="as">
+      <default><![CDATA[['<Alt>b']]]></default>
+      <summary>Switch to workspace B.</summary>
+    </key>
+    <key name="workspace-s" type="as">
+      <default><![CDATA[['<Alt>s']]]></default>
+      <summary>Switch to workspace S.</summary>
+    </key>
+    <key name="workspace-a" type="as">
+      <default><![CDATA[['<Alt>a']]]></default>
+      <summary>Switch to workspace A.</summary>
+    </key>
+    <key name="workspace-m" type="as">
+      <default><![CDATA[['<Alt>m']]]></default>
+      <summary>Switch to workspace M.</summary>
+    </key>
+    <key name="workspace-d" type="as">
+      <default><![CDATA[['<Alt>d']]]></default>
+      <summary>Switch to workspace D.</summary>
+    </key>
+
     <key name="inner-gap" type="i">
       <default>10</default>
       <summary>The gap between windows in pixels.</summary>

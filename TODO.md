@@ -38,7 +38,8 @@ Refer to docs/workspaces.md for implementation instructions
   - [x] Set `org.gnome.mutter dynamic-workspaces=false` and ensure required count via `global.workspace_manager`.
 - [x] Add extension setting for workspace names (string-array)
   - [x] Default to: `['1','2','3','4','5','6','T','B','S','A','M']`.
-- [ ] Register switch-to-workspace keybindings for each fixed workspace
-  - [ ] Define GSettings keys (type `as`) and bind via `Main.wm.addKeybinding`.
+- [x] Register switch-to-workspace keybindings for each fixed workspace
+  - [x] Define GSettings keys (type `as`) and bind via `Main.wm.addKeybinding`.
+  - [x] Support both numbered (Alt+1-6) and letter (Alt+T/B/S/A/M) workspaces.
 - [ ] Optional: display names in any UI/OSD we provide.
-- [ ] Document behavior, caveats (Wayland vs Xorg), and conflicts in README.
+- [x] Document behavior, caveats (Wayland vs Xorg), and conflicts in README.

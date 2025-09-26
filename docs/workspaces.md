@@ -12,8 +12,8 @@ Brief reference for implementing fixed-count workspaces with custom names. Works
 ### One-time test (CLI)
 ```bash
 gsettings set org.gnome.mutter dynamic-workspaces false
-gsettings set org.gnome.desktop.wm.preferences num-workspaces 11
-gsettings set org.gnome.desktop.wm.preferences workspace-names "['1','2','3','4','5','6','T','B','S','A','M']"
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 12
+gsettings set org.gnome.desktop.wm.preferences workspace-names "['1','2','3','4','5','6','T','B','S','A','M','D']"
 # Restart GNOME Shell (Xorg): Alt+F2, r, Enter
 ```
 
@@ -25,8 +25,8 @@ const mutter = new Gio.Settings({ schema: 'org.gnome.mutter' });
 const wm = new Gio.Settings({ schema: 'org.gnome.desktop.wm.preferences' });
 
 mutter.set_boolean('dynamic-workspaces', false);
-wm.set_int('num-workspaces', 11);
-wm.set_strv('workspace-names', ['1','2','3','4','5','6','T','B','S','A','M']);
+wm.set_int('num-workspaces', 12);
+wm.set_strv('workspace-names', ['1','2','3','4','5','6','T','B','S','A','M','D']);
 ```
 
 ### Notes
@@ -38,6 +38,22 @@ wm.set_strv('workspace-names', ['1','2','3','4','5','6','T','B','S','A','M']);
 - Register switch-to-workspace-N with `Main.wm.addKeybinding(...)` using
   `Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW`.
 - Store accelerators in extension schema keys (`type="as"`) and bind at enable().
+
+### GNOME 46+ Workspace API Changes
+**Important**: In GNOME 46+, the workspace switching API changed. Use the new API:
+
+```js
+// OLD (deprecated/removed in GNOME 46+):
+wm.activate_workspace(index, global.get_current_time());
+
+// NEW (GNOME 46+):
+const workspace = global.workspace_manager.get_workspace_by_index(index);
+if (workspace) {
+    workspace.activate(global.get_current_time());
+}
+```
+
+**References**: [workspace-switcher-manager extension](https://github.com/G-dH/workspace-switcher-manager) supports GNOME 3.36–48 and uses the new API approach.
 
 ### Verification
 ```bash

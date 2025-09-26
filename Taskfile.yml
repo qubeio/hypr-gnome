@@ -33,7 +33,7 @@ tasks:
   # Install the extension to the local GNOME Shell extensions directory
   install:
     desc: "Install the Hypr-GNOME extension"
-    deps: [build]
+    deps: [build, copy-schema]
     cmds:
       - echo "==> Installing Hypr-GNOME Extension..."
       - rm -rf {{.EXTDIR}}/{{.UUID}}

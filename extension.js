@@ -37,13 +37,19 @@ const KEYBINDINGS = {
       const wm = global.workspace_manager;
       const index = wm.get_active_workspace_index();
       if (index > 0) {
-        wm.activate_workspace(index - 1, global.get_current_time());
+        const workspace = wm.get_workspace_by_index(index - 1);
+        if (workspace) {
+          workspace.activate(global.get_current_time());
+        }
       }
     },
     'workspace-next':     (self) => {
       const wm = global.workspace_manager;
       const index = wm.get_active_workspace_index();
-      wm.activate_workspace(index + 1, global.get_current_time());
+      const workspace = wm.get_workspace_by_index(index + 1);
+      if (workspace) {
+        workspace.activate(global.get_current_time());
+      }
     },
     'move-to-workspace-prev': (self) => {
       const wm = global.workspace_manager;
@@ -66,7 +72,20 @@ const KEYBINDINGS = {
     },
     'test-keybinding': (self) => {
       log(`[Hypr-GNOME] TEST KEYBINDING TRIGGERED! This proves the system works.`);
-    }
+    },
+    // Workspace switching keybindings
+    'workspace-1': (self) => self._switchToWorkspace(0),
+    'workspace-2': (self) => self._switchToWorkspace(1),
+    'workspace-3': (self) => self._switchToWorkspace(2),
+    'workspace-4': (self) => self._switchToWorkspace(3),
+    'workspace-5': (self) => self._switchToWorkspace(4),
+    'workspace-6': (self) => self._switchToWorkspace(5),
+    'workspace-t': (self) => self._switchToWorkspace(6),
+    'workspace-b': (self) => self._switchToWorkspace(7),
+    'workspace-s': (self) => self._switchToWorkspace(8),
+    'workspace-a': (self) => self._switchToWorkspace(9),
+    'workspace-m': (self) => self._switchToWorkspace(10),
+    'workspace-d': (self) => self._switchToWorkspace(11)
 };
 
 // ── HELPER‑FUNCTION ────────────────────────────────────────
@@ -327,6 +346,32 @@ class InteractionHandler {
             if (area>max){max=area; best=w;}
         }
         return best;
+    }
+
+    _switchToWorkspace(workspaceIndex) {
+        const wm = global.workspace_manager;
+        const totalWorkspaces = wm.get_n_workspaces();
+        
+        // Ensure the workspace index is valid
+        if (workspaceIndex < 0 || workspaceIndex >= totalWorkspaces) {
+            log(`[Hypr-GNOME] Invalid workspace index: ${workspaceIndex} (total: ${totalWorkspaces})`);
+            return;
+        }
+        
+        log(`[Hypr-GNOME] Switching to workspace ${workspaceIndex + 1} (index ${workspaceIndex})`);
+        
+        try {
+            // GNOME 46+ API: Use workspace.activate() instead of wm.activate_workspace()
+            const workspace = wm.get_workspace_by_index(workspaceIndex);
+            if (workspace) {
+                workspace.activate(global.get_current_time());
+                log(`[Hypr-GNOME] Successfully switched to workspace ${workspaceIndex + 1}`);
+            } else {
+                log(`[Hypr-GNOME] Could not get workspace at index ${workspaceIndex}`);
+            }
+        } catch (e) {
+            log(`[Hypr-GNOME] Error switching to workspace ${workspaceIndex + 1}: ${e.message}`);
+        }
     }
 }
 
@@ -699,7 +744,7 @@ export default class HyprGnomeExtension extends Extension {
             mutterSettings.set_boolean('dynamic-workspaces', false);
             
             // Set workspace count and names
-            const workspaceNames = ['1', '2', '3', '4', '5', '6', 'T', 'B', 'S', 'A', 'M'];
+            const workspaceNames = ['1', '2', '3', '4', '5', '6', 'T', 'B', 'S', 'A', 'M', 'D'];
             wmSettings.set_int('num-workspaces', workspaceNames.length);
             wmSettings.set_strv('workspace-names', workspaceNames);
             
