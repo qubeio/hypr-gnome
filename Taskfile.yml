@@ -30,16 +30,66 @@ tasks:
       - rm -rf build
       - echo "✓  {{.UUID}}-v{{.VERSION}}.zip created"
 
+  # Build the extension for GNOME Extensions gallery (no sudo required)
+  build-gallery:
+    desc: "Build the extension for GNOME Extensions gallery submission"
+    cmds:
+      - echo "==> Building Hypr-GNOME extension for gallery..."
+      - echo "This build is for gallery submission (no sudo required)"
+      - rm -rf build && mkdir -p build/{{.UUID}}
+      - |
+        for f in {{.COMMON_FILES}}; do
+          if [ -e "$f" ]; then
+            cp -r "$f" build/{{.UUID}}/
+          fi
+        done
+      - glib-compile-schemas build/{{.UUID}}/schemas
+      - cp extension.js build/{{.UUID}}/extension.js
+      - cp prefs_modern.js build/{{.UUID}}/prefs.js
+      - |
+        sed -e "s/__UUID__/{{.UUID}}/g" \
+            -e "s/__VERSION__/{{.VERSION}}/g" \
+            metadata_modern.json.in > build/{{.UUID}}/metadata.json
+      - cd build && zip -qr ../{{.UUID}}-gallery-v{{.VERSION}}.zip .
+      - rm -rf build
+      - echo "✓  {{.UUID}}-gallery-v{{.VERSION}}.zip created"
+      - echo "This ZIP is ready for extensions.gnome.org submission"
+
   # Install the extension to the local GNOME Shell extensions directory
   install:
-    desc: "Install the Hypr-GNOME extension"
+    desc: "Install the Hypr-GNOME extension (requires sudo for schema)"
     deps: [build, copy-schema]
     cmds:
       - echo "==> Installing Hypr-GNOME Extension..."
+      - echo "Installing extension files..."
       - rm -rf {{.EXTDIR}}/{{.UUID}}
       - unzip -q {{.UUID}}-v{{.VERSION}}.zip -d {{.EXTDIR}}
       - rm -f {{.UUID}}-v{{.VERSION}}.zip
-      - echo "✓  Hypr-GNOME Extension installed to {{.EXTDIR}}/{{.UUID}}. Restart GNOME Shell to apply."
+      - echo "✓  Hypr-GNOME Extension installed to {{.EXTDIR}}/{{.UUID}}"
+      - echo "✓  Schema installed to system directory"
+      - echo ""
+      - echo "Next steps:"
+      - echo "1. Restart GNOME Shell (Alt+F2, type 'r', press Enter)"
+      - echo "2. Enable the extension in GNOME Extensions app"
+      - echo "3. Configure settings in GNOME Settings > Extensions > Hypr-GNOME"
+
+  # Install the extension for gallery users (no sudo required)
+  install-user:
+    desc: "Install the extension for gallery users (no sudo required)"
+    deps: [build-gallery]
+    cmds:
+      - echo "==> Installing Hypr-GNOME Extension (Gallery method)..."
+      - echo "Installing extension files to user directory..."
+      - rm -rf {{.EXTDIR}}/{{.UUID}}
+      - unzip -q {{.UUID}}-gallery-v{{.VERSION}}.zip -d {{.EXTDIR}}
+      - rm -f {{.UUID}}-gallery-v{{.VERSION}}.zip
+      - echo "✓  Hypr-GNOME Extension installed to {{.EXTDIR}}/{{.UUID}}"
+      - echo "✓  Schema bundled in extension (no system install needed)"
+      - echo ""
+      - echo "Next steps:"
+      - echo "1. Restart GNOME Shell (Alt+F2, type 'r', press Enter)"
+      - echo "2. Enable the extension in GNOME Extensions app"
+      - echo "3. Configure settings in GNOME Settings > Extensions > Hypr-GNOME"
 
   # Clean up build artifacts and ZIP files
   clean:
@@ -59,9 +109,26 @@ tasks:
   copy-schema:
     desc: "Copy the schema to the system schema directory"
     cmds:
+      - echo "==> Installing GSettings schema..."
+      - echo "This requires sudo privileges to install the schema system-wide."
+      - echo "This is the correct method for GNOME 46+ extensions."
       - sudo cp schemas/org.gnome.shell.extensions.hypr-gnome.gschema.xml /usr/share/glib-2.0/schemas/
       - sudo glib-compile-schemas /usr/share/glib-2.0/schemas
+      - echo "✓  Schema installed and compiled successfully"
   
+  # Uninstall the extension and clean up
+  uninstall:
+    desc: "Uninstall the Hypr-GNOME extension and clean up"
+    cmds:
+      - echo "==> Uninstalling Hypr-GNOME Extension..."
+      - echo "Removing extension files..."
+      - rm -rf {{.EXTDIR}}/{{.UUID}}
+      - echo "Removing schema from system..."
+      - sudo rm -f /usr/share/glib-2.0/schemas/org.gnome.shell.extensions.hypr-gnome.gschema.xml
+      - sudo glib-compile-schemas /usr/share/glib-2.0/schemas
+      - echo "✓  Extension and schema removed successfully"
+      - echo "Restart GNOME Shell to complete removal (Alt+F2, type 'r', press Enter)"
+
   show-extension-keybindings:
     desc: "Show the extension keybindings"
     cmds:

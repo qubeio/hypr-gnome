@@ -1,7 +1,7 @@
 {
   "uuid": "__UUID__",
   "name": "Hypr-GNOME",
-  "description": "A Hyprland-inspired tiling window manager for GNOME Shell.",
+  "description": "A Hyprland-inspired tiling window manager for GNOME Shell. Brings powerful keyboard-driven window management, dynamic tiling algorithms, and extensive customization options to GNOME.",
   "version": __VERSION__,
   "shell-version": [
     "45",
@@ -11,6 +11,22 @@
   ],
   "settings-schema": "org.gnome.shell.extensions.hypr-gnome",
   "preferences_ui": "prefs.js",
-  "url": "https://github.com/andreas/hypr-gnome",
-  "gettext-domain": "__UUID__"
+  "url": "https://github.com/qubeio/hypr-gnome",
+  "gettext-domain": "__UUID__",
+  "original-author": "Andreas",
+  "contributors": [
+    "Andreas <andreas@qubeio.com>"
+  ],
+  "keywords": [
+    "tiling",
+    "window-manager",
+    "hyprland",
+    "keyboard",
+    "productivity",
+    "workspace",
+    "layout"
+  ],
+  "donations": {
+    "github": "andreas"
+  }
 }

@@ -50,10 +50,11 @@ This extension provides GNOME users with powerful tiling capabilities, extensive
 
 ## Requirements
 
-* **GNOME Shell Version:** 45+
+* **GNOME Shell Version:** 45+ (tested on GNOME 46+)
 * **Session Type:** X11 and Wayland (both supported)
 * **Monitor Setup:** Single and multi-monitor support
 * **Ubuntu/Debian:** Optimized for Ubuntu and Debian-based distributions
+* **System Requirements:** sudo privileges for schema installation (GNOME 46+ requirement)
 
 ## Installation
 
@@ -61,7 +62,7 @@ This extension provides GNOME users with powerful tiling capabilities, extensive
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/andreas/hypr-gnome.git
+   git clone https://github.com/qubeio/hypr-gnome.git
    cd hypr-gnome
    ```
 
@@ -70,8 +71,11 @@ This extension provides GNOME users with powerful tiling capabilities, extensive
    # Check your GNOME Shell version first (requires 45+)
    gnome-shell --version
    
-   # Install the extension
-   make install
+   # For development/testing (requires sudo for schema)
+   task install
+   
+   # For gallery users (no sudo required)
+   task install-user
    ```
 
 3. **Enable the Extension**
@@ -79,21 +83,38 @@ This extension provides GNOME users with powerful tiling capabilities, extensive
    - Find "Hypr-GNOME" and toggle it on
    - Or reload GNOME Shell: `Alt + F2`, type `r`, press Enter
 
+**Installation Methods:**
+- **Development/Testing**: Uses `task install` (requires sudo for system-wide schema installation)
+- **Gallery Users**: Uses `task install-user` (no sudo required, schemas bundled in extension)
+
 ### Manual Installation
 
 If you prefer to build the extension manually:
 
 ```bash
-# Build the extension
-make build
-
-# Extract and install manually
+# For development/testing (requires sudo)
+task build
 unzip hypr-gnome@qubeio.com-v2.0.zip -d ~/.local/share/gnome-shell/extensions/
+sudo cp schemas/org.gnome.shell.extensions.hypr-gnome.gschema.xml /usr/share/glib-2.0/schemas/
+sudo glib-compile-schemas /usr/share/glib-2.0/schemas
+
+# For gallery users (no sudo required)
+task build-gallery
+unzip hypr-gnome@qubeio.com-gallery-v2.0.zip -d ~/.local/share/gnome-shell/extensions/
+```
+
+### Uninstall
+```bash
+# Remove extension and schema (development method)
+task uninstall
+
+# Remove extension only (gallery method)
+rm -rf ~/.local/share/gnome-shell/extensions/hypr-gnome@qubeio.com
 ```
 
 ### Clean Up
 ```bash
-make clean  # Remove build artifacts and ZIP files
+task clean  # Remove build artifacts and ZIP files
 ```
 
 ## Configuration
@@ -204,7 +225,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ```bash
 # Clone the repository
-git clone https://github.com/andreas/hypr-gnome.git
+   git clone https://github.com/qubeio/hypr-gnome.git
 cd hypr-gnome
 
 # Install development dependencies
@@ -239,8 +260,8 @@ make build-dev
 ### Getting Help
 
 - 📖 [Documentation](docs/)
-- 🐛 [Report Issues](https://github.com/andreas/hypr-gnome/issues)
-- 💬 [Discussions](https://github.com/andreas/hypr-gnome/discussions)
+- 🐛 [Report Issues](https://github.com/qubeio/hypr-gnome/issues)
+- 💬 [Discussions](https://github.com/qubeio/hypr-gnome/discussions)
 - 📧 [Contact](mailto:andreas@qubeio.com)
 
 ## License

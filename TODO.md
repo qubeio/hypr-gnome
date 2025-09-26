@@ -121,7 +121,15 @@ Refer to docs/workspaces.md for implementation instructions
   - [x] Implement live preview of settings changes
   - [x] Test options screen with different GNOME themes
 
-### Next – Advanced tiling features and layouts
+#### Ensure GNOME 46+ compliant installation
+
+- [ ] Update installation scripts/process to meet GNOME 46+ requirements
+- [ ] Verify schema installation and extension metadata for GNOME 46+
+- [ ] Test extension installation and enablement on GNOME 46+
+- [ ] Document GNOME 46+ installation steps in README
+
+
+#### Publish to Gnome extensions
 
 
 #### Implement window resizing
